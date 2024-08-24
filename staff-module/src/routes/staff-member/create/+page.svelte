@@ -14,28 +14,27 @@
         // onResult: () => {
         // 	loading = false;
         // },
-        onError: ({ result }) => {
-        	console.log(result);
-        	// loading = false;
-        }
+        // onError: ({ result }) => {
+        // 	console.log(result);
+        // 	// loading = false;
+        // }
     })
 
-    $: inputValue = $form.nickname || $form.firstname.toLowerCase()
+    // $: inputValue = $form.nickname || $form.firstname.toLowerCase()
 
-    let isEditable = false
+    // let isEditable = false
 
-    function handleEdit() {
-        isEditable = true
-    }
+    // function handleEdit() {
+    //     isEditable = true
+    // }
 
-    // @ts-ignore
-    function handleInput(event) {
-        $form.nickname = event.target.value
-    }
-    console.log($form);
+    // // @ts-ignore
+    // function handleInput(event) {
+    //     $form.nickname = event.target.value
+    // }
 </script>
 
-<form method="POST" use:enhance>
+<form method="POST">
     <div class="flex flex-col items-center w-full">
         <div class="font-sans grid grid-cols-3 items-center w-full border-b">
             <button type="button" on:click={() => goto('/staff-member')}>
@@ -174,13 +173,12 @@
                         type="text"
                         id="nickname"
                         name="nickname"
-                        bind:value={inputValue}
-                        on:input={handleInput}
-                        disabled={!isEditable}
+                        bind:value={$form.nickname}
+                      
                     />
                     <button
                         class="bg-gray-50 text-gray-700 border-2 p-2 my-2 rounded-e-lg focus:ring-1 focus:ring-black"
-                        on:click={handleEdit}
+                       
                         type="button"
                     >
                         Edit
@@ -281,6 +279,7 @@
         </div>
     </div>
 </form>
+
 <style>
     /* General styles for all inputs to reset browser defaults */
     input {

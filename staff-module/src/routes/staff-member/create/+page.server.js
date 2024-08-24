@@ -14,7 +14,7 @@ export const load = async () => {
 export const actions = {
     default: async ({ request }) => {
         // Log the incoming request to see the full request object
-        console.log('Request:', request)
+        // console.log('Request:', request)
 
         const form = await superValidate(request, zod(addStaffFormSchema))
 
@@ -28,12 +28,12 @@ export const actions = {
             })
         }
 
-        let { data: staffData } = form
-        console.log('Staff Data:', staffData) // Log the parsed form data
+        let { firstname, lastname, mobile, email } = form.data
+        console.log('Staff Data:', {firstname, lastname, mobile, email}) // Log the parsed form data
 
         const { data, error } = await supabase
             .from('staff')
-            .insert([staffData])
+            .insert([{ firstname, lastname, mobile, email }])
             .select()
 
         if (error) {
