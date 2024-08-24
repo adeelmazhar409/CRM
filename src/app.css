@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@font-face {
+    font-family: 'Urbanist Regular';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Urbanist Regular'), url('Urbanist[wght].woff') format('woff');
+}
