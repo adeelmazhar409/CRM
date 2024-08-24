@@ -1,0 +1,16 @@
+{
+	"/": [],
+	"/staff-member": [
+		"src/routes/staff-member/+layout.server.js",
+		"src/routes/staff-member/+layout.server.js"
+	],
+	"/staff-member/create": [
+		"src/routes/staff-member/create/+page.server.js",
+		"src/routes/staff-member/+layout.server.js"
+	],
+	"/test": [],
+	"/update": [],
+	"/[id]": [
+		"src/routes/[id]/+page.server.js"
+	]
+}
