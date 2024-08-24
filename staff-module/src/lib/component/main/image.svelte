@@ -1,11 +1,3 @@
-<script>
-  import PuprleButton from '$lib/UI/puprle-button.svelte'
-  import Bar from '$lib/UI/bar.svelte';
-  let width ='16%';
-  let name ='save'
-   let type ='submit'
-</script>
-
 <div class="flex flex-col items-center w-full">
    
     <div class="font-sans grid grid-cols-3 items-center w-screen border-b">
@@ -16,17 +8,21 @@
     />
       <h2 class="text-center font-semibold text-2xl leading-8">Update Details</h2>
       <div class="flex justify-end">
-        <PuprleButton bind:name />
-
-
+        <button class="bg-purple-600 text-white w-16 p-2 rounded-lg mx-5 my-4">
+          Save
+        </button>
       </div>
     </div>
   
    
     <div class=" flex w-1/3 my-10 flex-col  ">
         <div>
-           
-            <Bar bind:width />
+            <div class="w-full bg-gray-200 rounded h-1 flex">
+                <div
+                    class="bg-green-500 h-[5px] rounded-l transition-all duration-500"
+                    style="width: 16%"
+                ></div>
+            </div>
 
             <div class="w-full flex justify-between absolute top-0 h-4">
                 <div class="w-1/4 h-1 border-r-2 border-white"></div>

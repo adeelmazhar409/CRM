@@ -1,52 +1,36 @@
 <script>
-    // @ts-nocheck
+// @ts-nocheck
 
+    import { goto } from '$app/navigation'
     import { selectedUser } from '$lib/store/store'
 
-    let data = [
-        { id: '@Gus', name: 'Guston Daniels', role: 'Owner', tagename: 'GD' },
-        {
-            id: '@phoenix',
-            name: 'Phoenix Baker',
-            role: 'Manager',
-            tagename: 'PB',
-        },
-        {
-            id: '@lana',
-            name: 'Lana Steiner',
-            role: 'Service Staff',
-            tagename: 'LS',
-        },
-        {
-            id: '@demi',
-            name: 'Demi Wilkinson',
-            role: 'Kitchen Staff',
-            tagename: 'DW',
-        },
-        {
-            id: '@candice',
-            name: 'Candice Wu',
-            role: 'Kitchen Staff',
-            tagename: 'CW',
-        },
-        {
-            id: '@natali',
-            name: 'Natali Craig',
-            role: 'Service Staff',
-            tagename: 'NC',
-        },
-    ]
-
+    export let staffMember = []
     export let isStaffviewOpen = false
 
-    // const toggleStaffview = () => {
-    //     isStaffviewOpen = !isStaffviewOpen
-    // }
+    let staffMemberInTable = staffMember.map((v, i) => {
+        return {
+            tagName:
+                v.firstname.charAt(0).toUpperCase() +
+                v.lastname.charAt(0).toUpperCase(),
+            Name:
+                v.firstname.charAt(0).toUpperCase() +
+                v.firstname.slice(1) +
+                ' ' +
+                v.lastname.charAt(0).toUpperCase() +
+                v.lastname.slice(1),
+            id: `@${v.firstname}`,
+            role: v.role
+        }
+    })
 
     const handleRowClick = (profile) => {
         // toggleStaffview()
         isStaffviewOpen = true
         selectedUser.set(profile)
+    }
+
+    const handleAddStaff = () => {
+        goto('/staff-member/create')
     }
 </script>
 
@@ -57,6 +41,7 @@
         </p>
 
         <button
+            on:click={handleAddStaff}
             class="flex flex-row items-center gap-2 px-[18px] py-2 bg-purple-text font-medium text-base text-white rounded-lg"
         >
             <img src="/icons/plus.svg" alt="" />Staff Member
@@ -82,7 +67,7 @@
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-                {#each data as person}
+                {#each staffMemberInTable as person}
                     <tr
                         class="hover:bg-zinc-50"
                         on:click={() => handleRowClick(person)}
@@ -97,12 +82,12 @@
                                     <p
                                         class="font-medium text-text-light text-lg leading-28"
                                     >
-                                        {person.tagename}
+                                        {person.tagName}
                                     </p>
                                 </div>
                                 <div>
                                     <p class="font-semibold text-lg leading-28">
-                                        {person.name}
+                                        {person.Name}
                                     </p>
                                     <p class="text-base font-normal leading-24">
                                         {person.id}

@@ -1,8 +1,8 @@
 <script>
 // @ts-nocheck
-    import Bar from '$lib/UI/bar.svelte';
+
     import { selectedUser } from '$lib/store/store'
-    let width = '';
+
     let person = ''
 
     const unsubscribe = selectedUser.subscribe((value) => {

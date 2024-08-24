@@ -1,3 +1,4 @@
+
 <div class="bg-white flex flex-col gap-5 mx-8 my-6 justify-center">
     <!-- Reports Section -->
     <div class="grid grid-col-1 gap-2">
@@ -252,7 +253,8 @@
             POS Access Management
         </div>
 
-        <div
+        <a  
+            href="/staff-member"
             class="flex gap-3 p-2 items-center group hover:bg-purple-50 rounded-md"
         >
             <svg
@@ -275,7 +277,7 @@
             >
                 Staff Members
             </div>
-        </div>
+        </a>
 
         <div
             class="flex gap-3 p-2 items-center group hover:bg-purple-50 rounded-md"

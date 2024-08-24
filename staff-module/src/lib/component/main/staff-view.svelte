@@ -5,9 +5,11 @@
 
     export let isStaffviewOpen = false
     export let isStaffdelete = false
+    export let id = ''
     // export let editPage = false
 
     let user = {
+        id:'sdfghj',
         firstName: 'First name',
         lastName: 'last name',
         email: 'email@example.com',
@@ -36,7 +38,7 @@
         isStaffdelete = !isStaffdelete
     }
     const toggleEditpage = () => {
-        goto('/update')
+        goto(id)
     }
 </script>
 

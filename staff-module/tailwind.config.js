@@ -17,15 +17,8 @@ export default {
                     nav: 'rgba(52, 64, 84, 1)',
                     footer: 'rgba(102, 112, 133, 1)'
                 },
-               
-           
             },
-
-            screens: {
-                'sm-only': {'min': '640px', 'max': '720px'},
-              },
-            
-              fontFamily: {
+            fontFamily: {
                 sans: ['Urbanist', ...defaultTheme.fontFamily.sans],
             },
             fontSize: {

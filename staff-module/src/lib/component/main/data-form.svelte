@@ -1,12 +1,9 @@
 <script>
     // @ts-nocheck
-    import Bar from '$lib/UI/bar.svelte';
-    import PuprleButton from '$lib/UI/puprle-button.svelte'
+
     import { goto } from '$app/navigation'
     import { selectedUser } from '$lib/store/store'
-    let width ='16%';
-    let name ='save'
-    let type ='submit'
+
     let user = {
         firstName: 'First name',
         lastName: 'last name',
@@ -28,8 +25,6 @@
         }
     })
     
-
-   
 </script>
 
 <form on:submit|preventDefault={() => console.log(user)} action="">
@@ -50,14 +45,23 @@
                 Add Staff Member
             </h2>
             <div class="flex justify-end">
-                <PuprleButton bind:name />
+                <button
+                    type="submit"
+                    class="bg-purple-600 text-white w-16 p-2 rounded-lg mx-5 my-4"
+                >
+                    Save
+                </button>
             </div>
         </div>
         <div class="w-1/3 my-10">
             <div class="relative">
-               
-           <Bar bind:width />
-        
+                <div class="w-full bg-gray-200 rounded h-1 flex">
+                    <div
+                        class="bg-green-500 h-[5px] rounded-l transition-all duration-500"
+                        style="width: 16%"
+                    ></div>
+                </div>
+
                 <div class="w-full flex justify-between absolute top-0 h-4">
                     <div class="w-1/4 h-1 border-r-2 border-white"></div>
                     <div class="w-1/4 h-1 border-r-2 border-white"></div>
@@ -106,7 +110,7 @@
                         bind:value={user.lastName}
                     />
                 </div>
-            </div>
+|            </div>
 
             <div class="my-7">
                 <label
