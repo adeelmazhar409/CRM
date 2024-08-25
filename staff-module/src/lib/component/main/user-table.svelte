@@ -4,10 +4,10 @@
     import { goto } from '$app/navigation'
     import { selectedUser } from '$lib/store/store'
 
-    export let staffMember = []
+    export let staffMember;
     export let isStaffviewOpen = false
 
-    let staffMemberInTable = staffMember.map((v, i) => {
+    $: staffMemberInTable = staffMember.map((v, i) => {
         return {
             tagName:
                 v.firstname.charAt(0).toUpperCase() +
@@ -18,19 +18,21 @@
                 ' ' +
                 v.lastname.charAt(0).toUpperCase() +
                 v.lastname.slice(1),
-            id: `@${v.firstname}`,
-            role: v.role
+            tag: `@${v.firstname}`,
+            role: v.role,
+            id: v.id
         }
     })
 
     const handleRowClick = (profile) => {
-        // toggleStaffview()
-        isStaffviewOpen = true
+        // console.log(profile);
         selectedUser.set(profile)
+        isStaffviewOpen = true
+        
     }
 
-    const handleAddStaff = () => {
-        goto('/staff-member/create')
+    const handleEditStaff = (profile) => {
+        goto('/staff-member/profile.id')
     }
 </script>
 
@@ -41,7 +43,7 @@
         </p>
 
         <button
-            on:click={handleAddStaff}
+            on:click={handleEditStaff}
             class="flex flex-row items-center gap-2 px-[18px] py-2 bg-purple-text font-medium text-base text-white rounded-lg"
         >
             <img src="/icons/plus.svg" alt="" />Staff Member
@@ -69,7 +71,7 @@
             <tbody class="bg-white divide-y divide-gray-200">
                 {#each staffMemberInTable as person}
                     <tr
-                        class="hover:bg-zinc-50"
+                        class="hover:bg-zinc-50 cursor-pointer"
                         on:click={() => handleRowClick(person)}
                     >
                         <td
@@ -90,7 +92,7 @@
                                         {person.Name}
                                     </p>
                                     <p class="text-base font-normal leading-24">
-                                        {person.id}
+                                        {person.tag}
                                     </p>
                                 </div>
                             </div>

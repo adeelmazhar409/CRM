@@ -43,7 +43,7 @@
             </button>
 
             <h2 class="text-center font-semibold text-2xl leading-8">
-                Add Staff Member
+                Edit Staff Member
             </h2>
             <div class="flex justify-end">
                 <button

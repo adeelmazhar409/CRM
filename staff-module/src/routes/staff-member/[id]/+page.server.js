@@ -4,8 +4,16 @@ import { redirect } from '@sveltejs/kit'
 import { fail, superValidate } from 'sveltekit-superforms'
 import { zod } from 'sveltekit-superforms/adapters'
 
-export const load = async () => {
-    const form = await superValidate(zod(addStaffFormSchema))
+export const load = async ({ params }) => {
+
+    console.log(params.id);
+    const { data: staffMember, error } = await supabase
+        .from('staff')
+        .select()
+        .eq('id', params.id)
+        .single();
+
+    const form = await superValidate(staffMember, zod(addStaffFormSchema))
 
     // Always return { form } in load functions
     return { form }

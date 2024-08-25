@@ -1,19 +1,34 @@
 <script>
+    // @ts-nocheck
+
     import { goto } from '$app/navigation'
+    import { selectedUser } from '$lib/store/store'
+    import { message } from 'sveltekit-superforms'
 
-    export let isStaffdelete = false
-    export let isDeletemassage = false
-    export let isStaffviewOpen = false
+    let id = ''
+    const unsubscribe = selectedUser.subscribe((value) => {
+        if (value) {
+            // console.log(value);
+            id = value.id
+            name = value.Name
+        }
+    })
 
+    const toggledeletemassage = async () => {
+        const response = await fetch(`/api/staff/${id}`, {
+            method: 'DELETE',
+        })
 
-    const toggleStaffdelete = () => {
-        isStaffdelete = !isStaffdelete
+        if (response.ok) {
+            goto('/staff-member', { state: { message: true } })
+        } else {
+            const error = await response.json()
+            console.error('Error deleting client:', error)
+        }
     }
 
-    const toggledeletemassage = () => {
-        isDeletemassage = !isDeletemassage
-        isStaffdelete = !isStaffdelete
-        isStaffviewOpen = !isStaffviewOpen
+    const toggleStaffdelete = () => {
+        goto('/staff-member')
     }
 </script>
 
@@ -36,7 +51,7 @@
                 Delete Staff Member?
             </h2>
             <div class="m-1 text-gray-600 font-normal text-sm leading-5">
-                <p>Are you sure you want to delete Alfonso Cassano?</p>
+                <p>Are you sure you want to delete {name}?</p>
                 <p class="mt-5">
                     This action cannot be undone, and all related data will be
                     permanently removed.

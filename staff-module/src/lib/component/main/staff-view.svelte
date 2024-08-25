@@ -4,12 +4,9 @@
     import { selectedUser } from '$lib/store/store'
 
     export let isStaffviewOpen = false
-    export let isStaffdelete = false
-    export let id = ''
-    // export let editPage = false
-
+    export let staffMember
+    // console.log(staffMember);
     let user = {
-        id:'sdfghj',
         firstName: 'First name',
         lastName: 'last name',
         email: 'email@example.com',
@@ -17,16 +14,22 @@
         mobile: 'Not provided',
         nickname: 'abc',
     }
-
+    let id = ''
     const unsubscribe = selectedUser.subscribe((value) => {
         if (value) {
+            id = value.id
+            let userdetail = staffMember.find((v) => {
+                return v.id === id
+            })
+            // console.log('from staffview:',userdetail)
+
             user = {
-                firstName: value.name.split(' ')[0] || '',
-                lastName: value.name.split(' ')[1] || '',
-                email: value.email || 'email@example.com',
-                role: value.role || 'Staff',
-                mobile: 'Not provided',
-                nickname: 'abc',
+                firstName: userdetail.firstname,
+                lastName: userdetail.lastname,
+                email: userdetail.email || 'email@example.com',
+                role: userdetail.role || 'Staff',
+                mobile: userdetail.mobile || 'Not provided',
+                nickname: userdetail.nickname || 'abc',
             }
         }
     })
@@ -34,11 +37,11 @@
     const toggleStaffview = () => {
         isStaffviewOpen = !isStaffviewOpen
     }
-    const toggleStaffdelete = () => {
-        isStaffdelete = !isStaffdelete
+    const toggleStaffdelete = async () => {
+        goto('/staff-member/delete')
     }
     const toggleEditpage = () => {
-        goto(id)
+        goto(`staff-member/${id}`)
     }
 </script>
 
@@ -58,7 +61,8 @@
         <div
             class="font-semibold text-[20px] text-text-hard col-span-3 leading-8"
         >
-            Alfonso Cassano
+            {user.firstName}
+            {user.lastName}
         </div>
         <div></div>
     </div>
@@ -112,7 +116,7 @@
         <div class=" grid grid-cols-3 justify-between w-full text-left">
             <div class="grid grid-rows-2">
                 <div class=" font-semibold text-base leading-6 text-text-hard">
-                    Nick Nmae
+                    Nick Name
                 </div>
                 <div class=" font-normal text-lg leading-7 text-text-hard">
                     {user.nickname}
