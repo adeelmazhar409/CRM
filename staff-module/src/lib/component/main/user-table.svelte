@@ -32,7 +32,7 @@
     }
 
     const handleEditStaff = (profile) => {
-        goto('/staff-member/profile.id')
+        goto('/staff-member/create')
     }
 </script>
 

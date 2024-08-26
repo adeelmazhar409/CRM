@@ -1,13 +1,13 @@
 <script>
     import { superForm } from 'sveltekit-superforms/client'
-    import { addStaffFormSchema } from '$lib/schemas/add-staff-member'
+    import { editStaffFormSchema } from '$lib/schemas/update-staff-member'
     import { goto } from '$app/navigation'
     import { zod } from 'sveltekit-superforms/adapters'
 
     export let data
 
     const { form, errors } = superForm(data.form, {
-        validators: zod(addStaffFormSchema),
+        validators: zod(editStaffFormSchema),
         // onSubmit: () => {
         // 	loading = true;
         // },
