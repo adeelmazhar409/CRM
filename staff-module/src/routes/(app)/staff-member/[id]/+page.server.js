@@ -6,7 +6,7 @@ import { zod } from 'sveltekit-superforms/adapters'
 
 export const load = async ({ params }) => {
 
-    console.log(params.id);
+    // console.log(params.id)
     const { data: staffMember, error } = await supabase
         .from('staff')
         .select()

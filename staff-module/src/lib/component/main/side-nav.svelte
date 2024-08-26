@@ -253,7 +253,7 @@
             POS Access Management
         </div>
 
-        <a  
+        <a
             href="/staff-member"
             class="flex gap-3 p-2 items-center group hover:bg-purple-50 rounded-md"
         >
