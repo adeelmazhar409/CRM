@@ -23,33 +23,19 @@
     }
 
     export let data
-    let {staffMember} = data
+    let { staffMember } = data
     let message = false
-
 
     let isStaffviewOpen = false
 </script>
 
-<div class="flex flex-col min-h-screen">
-    <Header />
-
-    <div class="flex flex-grow">
-        <div class="bg-component-bg border-t-2 border-border-color w-1/6">
-            <SideNav />
+<div class="flex-grow border-t-2 border-l-2 border-l-border-color bg-zinc-50">
+    {#if showComponent}
+        <div transition:slide={{ y: -200 }}>
+            <GreenTicket />
         </div>
-
-        <div
-            class="flex-grow border-t-2 border-l-2 border-l-border-color bg-zinc-50"
-        >
-            {#if showComponent}
-                <div transition:slide={{ y: -200 }}>
-                    <GreenTicket />
-                </div>
-            {/if}
-            <Table bind:staffMember bind:isStaffviewOpen />
-        </div>
-    </div>
-    <Footer />
+    {/if}
+    <Table bind:staffMember bind:isStaffviewOpen />
 </div>
 
 <div
