@@ -1,5 +1,5 @@
 <div
-    class="font-sans flex flex-row justify-between items-center w-screen px-8 py-6 bg-component-bg h-fit"
+    class="font-sans  flex-row justify-between items-center w-screen px-8 py-6 bg-component-bg h-fit hidden sm:flex "
 >
     <div>
         <img src="/Logo.svg" class="w-24" alt="" />
