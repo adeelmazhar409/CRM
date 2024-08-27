@@ -12,11 +12,11 @@
         <Header />
 
         <div class="flex flex-grow">
-            <div class="bg-component-bg border-t-2 border-border-color w-1/5">
+            <div class="bg-component-bg border-t-2 hidden sm:block border-border-color min-w-fit">
                 <SideNav />
             </div>
             <div
-                class="flex-grow border-t-2 border-l-2 border-l-border-color bg-zinc-50"
+                class="border-t-2 w-full border-l-2 border-l-border-color bg-zinc-50"
             >
                 <slot />
             </div>

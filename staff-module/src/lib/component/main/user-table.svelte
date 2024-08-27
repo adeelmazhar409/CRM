@@ -1,13 +1,14 @@
 <script>
     // @ts-nocheck
 
-    import { goto } from '$app/navigation';
-    import { selectedUser } from '$lib/store/store';
-    import SideNav from '$lib/component/main/side-nav.svelte';
+    import { goto } from '$app/navigation'
+    import { selectedUser } from '$lib/store/staffmember'
+    import SideNav from '$lib/component/main/side-nav.svelte'
+    import { onMount, onDestroy } from 'svelte'
 
-    export let staffMember;
-    export let isStaffviewOpen = false;
-    let isMenuOpen = false;
+    export let staffMember
+    export let isStaffviewOpen = false
+    let isMenuOpen = false
 
     $: staffMemberInTable = staffMember.map((v, i) => {
         return {
@@ -22,33 +23,45 @@
                 v.lastname.slice(1),
             tag: `@${v.firstname}`,
             role: v.role || 'manager',
-            id: v.id
+            id: v.id,
         }
     })
 
     const handleRowClick = (profile) => {
-        selectedUser.set(profile);
-        isStaffviewOpen = true;
-    };
+        selectedUser.set(profile)
+        isStaffviewOpen = true
+    }
 
     const handleEditStaff = (profile) => {
         goto('/staff-member/create')
-    };
+    }
 
     const toggleMenu = () => {
-        isMenuOpen = !isMenuOpen;
-    };
+        isMenuOpen = !isMenuOpen
+    }
+    function clickOutside(node) {
+        return {
+            destroy() {
+                // ...cleanup goes here
+            },
+        }
+    }
 </script>
 
-<div class="relative mx-8">
+<div class="relative mx-6 lg:mx-8">
     <!-- Burger Button -->
-    <div class="sm:flex sm:flex-row flex-col justify-between items-center my-6 w-full">
+    <div
+        id="hamburger"
+        class=" sm:flex sm:flex-row flex-col justify-between items-center my-6 w-full"
+    >
         <div class="grid grid-cols-6 items-center my-8 sm:my-0">
             <button on:click={toggleMenu} class="grid sm:hidden">
                 <img src="/icons/burger.svg" alt="Menu" />
             </button>
 
-            <p class="font-semibold text-text-hard sm:text-xl text-lg leading-8 col-span-4 text-center">
+            <p
+                class="font-semibold text-text-hard sm:text-xl text-lg leading-8 col-span-4 text-center"
+            >
                 Staff Members
             </p>
         </div>
@@ -63,25 +76,23 @@
     </div>
 
     <!-- Full-screen Overlay with SideNav -->
-    <div
-        class={`fixed inset-0 bg-black bg-opacity-50 transition-opacity ${
-            isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
-        } z-50`}
-    >
-        <div
-            class={`fixed  h-full bg-white shadow-lg transition-transform transform ${
-                isMenuOpen ? 'translate-x-0' : '-translate-x-full'
-            }  w-full `}
+    {#if isMenuOpen}
+        <div            
+            class={`fixed inset-0 bg-black bg-opacity-50 transition-opacity ${
+                isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+            } z-50`}
         >
-            <button on:click={toggleMenu} class="text-right">
-                <img src="/icons/close.svg" alt="Close Menu" />
-            </button>
-          
-            <SideNav />
+            <div
+                class={`fixed overflow-auto w-4/5  h-full bg-white shadow-lg transition-transform transform ${
+                    isMenuOpen ? 'translate-x-0' : '-translate-x-full'
+                }  w-full `}
+            >
+                <SideNav />
+            </div>
         </div>
-    </div>
+    {/if}
 
-    <div class="my-6 overflow-x-auto border-2 border-border-color rounded-2xl">
+    <div class="my-6 overflow-y-auto border-2 border-border-color rounded-2xl">
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-zinc-50">
                 <tr>

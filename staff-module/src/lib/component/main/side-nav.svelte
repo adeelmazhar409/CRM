@@ -1,5 +1,4 @@
-
-<div class="bg-white  flex-col gap-5 mx-8 my-6 justify-center ">
+<div class="bg-white flex flex-col gap-5 mx-4 lg:mx-8 my-6 justify-center">
     <!-- Reports Section -->
     <div class="grid grid-col-1 gap-2">
         <div class="text-sm font-bold text-text-light font-urbanist">
@@ -8,7 +7,7 @@
 
         <!-- Repeated Items -->
         <div
-            class="flex gap-3 p-2 items-center group hover:bg-purple-50 rounded-md"
+            class="flex gap-3 py-2 items-center group hover:bg-purple-50 rounded-md"
         >
             <svg
                 width="24"
@@ -33,7 +32,7 @@
             </div>
         </div>
         <div
-            class="flex gap-3 p-2 items-center group hover:bg-purple-50 rounded-md"
+            class="flex gap-3 py-2 items-center group hover:bg-purple-50 rounded-md"
         >
             <svg
                 width="20"
@@ -58,7 +57,7 @@
             </div>
         </div>
         <div
-            class="flex gap-3 p-2 items-center group hover:bg-purple-50 rounded-md"
+            class="flex gap-3 py-2 items-center group hover:bg-purple-50 rounded-md"
         >
             <svg
                 width="20"
@@ -83,7 +82,7 @@
             </div>
         </div>
         <div
-            class="flex gap-3 p-2 items-center group hover:bg-purple-50 rounded-md"
+            class="flex gap-3 py-2 items-center group hover:bg-purple-50 rounded-md"
         >
             <svg
                 width="22"
@@ -116,7 +115,7 @@
         </div>
 
         <div
-            class="flex gap-3 p-2 items-center group hover:bg-purple-50 rounded-md"
+            class="flex gap-3 py-2 items-center group hover:bg-purple-50 rounded-md"
         >
             <svg
                 width="20"
@@ -163,7 +162,7 @@
             </div>
         </div>
         <div
-            class="flex gap-3 p-2 items-center group hover:bg-purple-50 rounded-md"
+            class="flex gap-3 py-2 items-center group hover:bg-purple-50 rounded-md"
         >
             <svg
                 width="20"
@@ -196,7 +195,7 @@
         </div>
 
         <div
-            class="flex gap-3 p-2 items-center group hover:bg-purple-50 rounded-md"
+            class="flex gap-3 py-2 items-center group hover:bg-purple-50 rounded-md"
         >
             <svg
                 width="22"
@@ -221,7 +220,7 @@
             </div>
         </div>
         <div
-            class="flex gap-3 p-2 items-center group hover:bg-purple-50 rounded-md"
+            class="flex gap-3 py-2 items-center group hover:bg-purple-50 rounded-md"
         >
             <svg
                 width="22"
@@ -255,7 +254,7 @@
 
         <a
             href="/staff-member"
-            class="flex gap-3 p-2 items-center group hover:bg-purple-50 rounded-md"
+            class="flex gap-3 py-2 items-center group hover:bg-purple-50 rounded-md"
         >
             <svg
                 width="24"
@@ -280,7 +279,7 @@
         </a>
 
         <div
-            class="flex gap-3 p-2 items-center group hover:bg-purple-50 rounded-md"
+            class="flex gap-3 py-2 items-center group hover:bg-purple-50 rounded-md"
         >
             <svg
                 width="22"
@@ -313,7 +312,7 @@
         </div>
 
         <div
-            class="flex gap-3 p-2 items-center group hover:bg-purple-50 rounded-md"
+            class="flex gap-3 py-2 items-center group hover:bg-purple-50 rounded-md"
         >
             <svg
                 width="20"
@@ -338,7 +337,7 @@
             </div>
         </div>
         <div
-            class="flex gap-3 p-2 items-center group hover:bg-purple-50 rounded-md"
+            class="flex gap-3 py-2 items-center group hover:bg-purple-50 rounded-md"
         >
             <svg
                 width="22"
@@ -365,4 +364,24 @@
     </div>
 </div>
 
+<button
+    class="text-sm sm:hidden font-semibold mt-1 m-4 text-purple-text leading-5"
+    >Log out</button
+>
+<div class="flex flex-col sm:hidden my-3 gap-3">
+    <hr class="w-full bg-slate-500" />
 
+    <div class="flex flex-row justify-start px-4 py-4 gap-2">
+        <button class="text-right border border-slate-300 rounded-md p-1.5 ">
+            <img src="/icons/side-nav-bottom.svg" class="py-1" alt="profile" />
+        </button>
+        <div class="flex flex-row gap-2">
+            <div>
+                <p class="text-sm font-semibold leading-5">Banh Mi Brother</p>
+                <p class="text-xs font-medium leading-18">
+                    ghassan zakaria@gmail.com
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
