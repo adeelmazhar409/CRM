@@ -4,7 +4,7 @@
     import { goto } from '$app/navigation'
     import { selectedUser } from '$lib/store/staffmember'
     import SideNav from '$lib/component/main/side-nav.svelte'
-    import { onMount, onDestroy } from 'svelte'
+
     export let staffMember
     export let isStaffviewOpen = false
     let isMenuOpen = false
@@ -35,10 +35,10 @@
         goto('/staff-member/create')
     }
 
-    const toggle = () => (isMenuOpen = !isMenuOpen);
+    const toggle = () => (isMenuOpen = !isMenuOpen)
 </script>
 
-<div class="relative mx-6 lg:mx-8" >
+<div class="relative mx-6 lg:mx-8">
     <!-- Burger Button -->
     <div
         id="hamburger"
@@ -65,22 +65,13 @@
         </button>
     </div>
 
-    <!-- Full-screen Overlay with SideNav -->
-    {#if isMenuOpen}
-        <div            
-            class={`fixed inset-0 bg-black bg-opacity-50 transition-opacity ${
-                isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
-            } z-50`}
-        >
-            <div
-                class={`fixed overflow-auto w-4/5  h-full bg-white shadow-lg transition-transform transform ${
-                    isMenuOpen ? 'translate-x-0' : '-translate-x-full'
-                }  w-full `}
-            >
-                <SideNav />
-            </div>
-        </div>
-    {/if}
+    <div
+        class={`fixed h-full inset-0 bg-white shadow-lg transition-transform transform ${
+            isMenuOpen ? 'translate-x-0' : '-translate-x-full'
+        } w-3/4 h-full overflow-auto`}
+    >
+        <SideNav bind:isMenuOpen />
+    </div>
 
     <div class="my-6 overflow-y-auto border-2 border-border-color rounded-2xl">
         <table class="min-w-full divide-y divide-gray-200">

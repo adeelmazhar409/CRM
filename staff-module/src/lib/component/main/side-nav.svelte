@@ -1,3 +1,11 @@
+<script>
+    export let isMenuOpen = false
+    const toggle = () => (isMenuOpen = !isMenuOpen)
+</script>
+
+<button on:click={toggle} class="grid sm:hidden">
+    <img src="/icons/burger.svg" alt="Menu" />
+</button>
 <div class="bg-white flex flex-col gap-5 mx-4 lg:mx-8 my-6 justify-center">
     <!-- Reports Section -->
     <div class="grid grid-col-1 gap-2">
@@ -372,7 +380,7 @@
     <hr class="w-full bg-slate-500" />
 
     <div class="flex flex-row justify-start px-4 py-4 gap-2">
-        <button class="text-right border border-slate-300 rounded-md p-1.5 ">
+        <button class="text-right border border-slate-300 rounded-md p-1.5">
             <img src="/icons/side-nav-bottom.svg" class="py-1" alt="profile" />
         </button>
         <div class="flex flex-row gap-2">

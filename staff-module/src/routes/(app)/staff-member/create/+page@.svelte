@@ -3,9 +3,10 @@
     import { addStaffFormSchema } from '$lib/schemas/add-staff-member'
     import { goto } from '$app/navigation'
     import { zod } from 'sveltekit-superforms/adapters'
+    import ProgressBar from '$lib/UI/bar.svelte'
 
     export let data
-
+    let width = 20
     const { form, errors } = superForm(data.form, {
         validators: zod(addStaffFormSchema),
         // onSubmit: () => {
@@ -50,12 +51,13 @@
                     type="submit"
                     class="bg-purple-600 text-white w-16 p-2 rounded-lg mx-5 my-4"
                 >
-                    Save
+                    Next
                 </button>
             </div>
         </div>
 
         <div class="w-1/3 my-10">
+            <ProgressBar bind:width/>
             <div class="grid my-8">
                 <div class="font-bold text-text-light text-2xl leading-8">
                     Profile

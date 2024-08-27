@@ -1,3 +1,7 @@
-<div class="bg-slate-600 max-w-full overflow-x-hidden">
+<script>
+    import '../app.css'
+</script>
+
+<div class=" max-w-full overflow-x-hidden">
     <slot />
 </div>
