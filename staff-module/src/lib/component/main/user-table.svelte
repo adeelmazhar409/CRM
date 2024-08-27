@@ -5,7 +5,6 @@
     import { selectedUser } from '$lib/store/staffmember'
     import SideNav from '$lib/component/main/side-nav.svelte'
     import { onMount, onDestroy } from 'svelte'
-
     export let staffMember
     export let isStaffviewOpen = false
     let isMenuOpen = false
@@ -36,26 +35,17 @@
         goto('/staff-member/create')
     }
 
-    const toggleMenu = () => {
-        isMenuOpen = !isMenuOpen
-    }
-    function clickOutside(node) {
-        return {
-            destroy() {
-                // ...cleanup goes here
-            },
-        }
-    }
+    const toggle = () => (isMenuOpen = !isMenuOpen);
 </script>
 
-<div class="relative mx-6 lg:mx-8">
+<div class="relative mx-6 lg:mx-8" >
     <!-- Burger Button -->
     <div
         id="hamburger"
         class=" sm:flex sm:flex-row flex-col justify-between items-center my-6 w-full"
     >
         <div class="grid grid-cols-6 items-center my-8 sm:my-0">
-            <button on:click={toggleMenu} class="grid sm:hidden">
+            <button on:click={toggle} class="grid sm:hidden">
                 <img src="/icons/burger.svg" alt="Menu" />
             </button>
 
