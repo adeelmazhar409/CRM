@@ -34,19 +34,19 @@
 
 <form method="POST">
     <div class="flex flex-col items-center w-full">
-        <div class="font-sans grid grid-cols-3 items-center w-full border-b">
+        <div class="font-sans grid grid-cols-4 md:grid-cols-3  items-center w-full border-b">
             <button type="button" on:click={() => goto('/staff-member')}>
                 <img
                     src="/icons/cross.svg"
                     alt="Close"
-                    class="mx-3 my-5 w-8 h-8"
+                    class="mx-3 my-5 md:w-8 md:h-8 w-6 h-6"
                 />
             </button>
 
-            <h2 class="text-center font-semibold text-2xl leading-8">
+            <h2 class=" mx-auto font-semibold md:text-2xl text-lg leading-8  col-span-2 md:col-span-1 ">
                 Add Staff Member
             </h2>
-            <div class="flex justify-end">
+            <div class="hidden md:flex justify-end">
                 <button
                     type="submit"
                     class="bg-purple-600 text-white w-16 p-2 rounded-lg mx-5 my-4"
@@ -56,34 +56,33 @@
             </div>
         </div>
 
-        <div class="w-1/3 my-10">
-            <ProgressBar bind:width/>
+        <div class="w-full md:w-1/3 my-2">
             <div class="grid my-8">
-                <div class="font-bold text-text-light text-2xl leading-8">
+                <div class="font-bold text-text-light md:text-2xl text-lg leading-8">
                     Profile
                 </div>
-                <div class="text-text-light font-normal text-lg leading-7 mt-2">
+                <div class="text-text-light font-normal md:text-lg text-base leading-7 mt-2">
                     You can only update the owner's nickname, email address, and
                     mobile number.
                 </div>
             </div>
 
-            <div class="grid grid-cols-2 gap-4">
+            <div class="flex flex-col md:grid md:grid-cols-2   gap-4">
                 <div class="w-full relative">
                     <label
                         for="firstname"
-                        class="font-semibold text-base leading-6 text-text-light"
+                        class="font-semibold md:text-base text-sm leading-6 text-text-light"
                     >
                         First Name
                     </label>
-                    <div class="relative">
+                    <div class="relative mx-2 md:mx-0">
                         <input
                             type="text"
                             id="firstname"
                             name="firstname"
                             aria-invalid={$errors.firstname ? 'true' : 'false'}
                             aria-describedby="name-error"
-                            class="w-full p-2 border-2 rounded-lg my-2 bg-slate-50 text-slate-600 focus:ring-1 focus:ring-black {$errors.firstname
+                            class="w-full p-2 border-2 rounded-lg my-2  bg-slate-50 text-slate-600 focus:ring-1 focus:ring-black {$errors.firstname
                                 ? 'border-red-500 focus:outline-none'
                                 : 'border focus:ring-1 focus:ring-black'}"
                             bind:value={$form.firstname}
@@ -115,14 +114,14 @@
                     {/if}
                 </div>
 
-                <div class="w-full relative">
+                <div class="w-full relative ">
                     <label
                         for="lastname"
-                        class="font-semibold text-base leading-6 text-text-light"
+                        class="font-semibold md:text-base text-sm leading-6 text-text-light"
                     >
                         Last Name
                     </label>
-                    <div class="relative">
+                    <div class="relative mx-2 md:mx-0">
                         <input
                             type="text"
                             id="lastname"
@@ -162,11 +161,11 @@
             <div class="my-7">
                 <label
                     for="nickname"
-                    class="font-semibold text-base leading-6 text-text-light"
+                    class="font-semibold md:text-base text-sm  leading-6 text-text-light"
                 >
                     Nick Name (Display Name)
                 </label>
-                <div class="flex items-center">
+                <div class="flex items-center mx-2 md:mx-0">
                     <input
                         class="w-full p-2 border-2 rounded-s-lg my-2 bg-slate-50 text-slate-600"
                         type="text"
@@ -191,11 +190,11 @@
             <div class="relative">
                 <label
                     for="email"
-                    class="font-semibold text-base leading-6 text-text-light"
+                    class="font-semibold md:text-base text-sm  leading-6 text-text-light"
                 >
                     Email Address
                 </label>
-                <div class="relative">
+                <div class="relative mx-2 md:mx-0">
                     <input
                         class="w-full p-2 border-2 rounded-lg my-2 bg-slate-50 text-slate-600 focus:ring-1 focus:ring-black {$errors.email
                             ? 'border-red-500 focus:outline-none'
@@ -235,11 +234,11 @@
             <div class="my-7 relative">
                 <label
                     for="mobile"
-                    class="font-semibold text-base leading-6 text-text-light"
+                    class="font-semibold md:text-base text-sm leading-6 text-text-light"
                 >
                     Mobile Number (Optional)
                 </label>
-                <div class="relative">
+                <div class="relative mx-2 md:mx-0">
                     <input
                         class="w-full p-2 border-2 rounded-lg my-2 bg-slate-50 text-slate-600 focus:ring-1 focus:ring-black {$errors.mobile
                             ? 'border-red-500 focus:outline-none'
@@ -276,6 +275,15 @@
                 {/if}
             </div>
         </div>
+        <div class=" flex w-full   md:hidden">
+            <button
+                type="submit"
+                class="bg-purple-600 text-white w-full p-2 rounded-lg mx-5 my-4"
+            >
+                Next
+            </button>
+        </div>
+   
     </div>
 </form>
 
