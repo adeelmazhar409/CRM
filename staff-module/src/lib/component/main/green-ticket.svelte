@@ -1,13 +1,18 @@
 <script>
-// @ts-nocheck
+    // @ts-nocheck
 
     import { goto } from '$app/navigation'
-    import { selectedUser } from '$lib/store/store'
+    import { selectedUser } from '$lib/store/staffmember'
 
     let person = ''
 
     const unsubscribe = selectedUser.subscribe((value) => {
-        person = value.Name
+        if (value) {
+            // console.log(value);
+            person = value.Name
+        } else {
+            person = 'Staff Member'
+        }
     })
 
     const clearMassage = () => {

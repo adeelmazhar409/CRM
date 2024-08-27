@@ -2,7 +2,7 @@
     // @ts-nocheck
 
     import { goto } from '$app/navigation'
-    import { selectedUser } from '$lib/store/store'
+    import { selectedUser } from '$lib/store/staffmember'
 
     let user = {
         firstName: 'First name',

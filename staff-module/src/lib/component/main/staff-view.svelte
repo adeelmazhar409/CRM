@@ -1,7 +1,7 @@
 <script>
     // @ts-nocheck
     import { goto } from '$app/navigation'
-    import { selectedUser } from '$lib/store/store'
+    import { selectedUser } from '$lib/store/staffmember'
 
     export let isStaffviewOpen = false
     export let staffMember
@@ -22,14 +22,15 @@
                 return v.id === id
             })
             // console.log('from staffview:',userdetail)
-
-            user = {
-                firstName: userdetail.firstname,
-                lastName: userdetail.lastname,
-                email: userdetail.email || 'email@example.com',
-                role: userdetail.role || 'Staff',
-                mobile: userdetail.mobile || 'Not provided',
-                nickname: userdetail.nickname || 'abc',
+            if (userdetail) {
+                user = {
+                    firstName: userdetail.firstname,
+                    lastName: userdetail.lastname,
+                    email: userdetail.email || 'email@example.com',
+                    role: userdetail.role || 'Staff',
+                    mobile: userdetail.mobile || 'Not provided',
+                    nickname: userdetail.nickname || 'abc',
+                }
             }
         }
     })

@@ -2,15 +2,18 @@
     // @ts-nocheck
 
     import { goto } from '$app/navigation'
-    import { selectedUser } from '$lib/store/store'
+    import { selectedUser } from '$lib/store/staffmember'
     import { message } from 'sveltekit-superforms'
 
     let id = ''
+    let name = ''
     const unsubscribe = selectedUser.subscribe((value) => {
         if (value) {
-            // console.log(value);
+            // console.log(value)
             id = value.id
             name = value.Name
+        } else {
+            console.log('value not found in delete component')
         }
     })
 
@@ -43,15 +46,20 @@
                         class=" w-12"
                     />
                 </div>
-                <div class="text-gray-400 hover:text-gray-600 cursor-pointer">
+                <button
+                    on:click={() => {
+                        goto('/staff-member')
+                    }}
+                    class="text-gray-400 hover:text-gray-600 cursor-pointer"
+                >
                     <img src="/icons/close.svg" alt="Close Icon" />
-                </div>
+                </button>
             </div>
             <h2 class="my-4 text-lg text-text-hard font-semibold leading-28">
                 Delete Staff Member?
             </h2>
             <div class="m-1 text-gray-600 font-normal text-sm leading-5">
-                <p>Are you sure you want to delete {name}?</p>
+                <p>Are you sure you want to delete {name} ?</p>
                 <p class="mt-5">
                     This action cannot be undone, and all related data will be
                     permanently removed.

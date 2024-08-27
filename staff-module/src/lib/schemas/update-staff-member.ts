@@ -2,7 +2,6 @@
 import { z } from 'zod'
 
 export const editStaffFormSchema = z.object({
-    id: z.string(),
     firstname: z
         .string()
         .min(2, { message: 'Please enter a vaild first name' })

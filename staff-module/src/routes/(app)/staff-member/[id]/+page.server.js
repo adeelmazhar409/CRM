@@ -6,27 +6,22 @@ import { fail, superValidate } from 'sveltekit-superforms'
 import { zod } from 'sveltekit-superforms/adapters'
 
 export const load = async ({ params }) => {
-    // console.log(params.id)
+
     const { data: staffMember, error } = await supabase
         .from('staff')
         .select()
-        .eq('id', params.id)
+        .eq('id', Id)
         .single()
 
     const form = await superValidate(staffMember, zod(editStaffFormSchema))
 
-    // Always return { form } in load functions
     return { form }
 }
 
 export const actions = {
     default: async ({ request, params }) => {
-        // Log the incoming request to see the full request object
-        // console.log('Request:', request)
-        // let id = params.id
         const form = await superValidate(request, zod(editStaffFormSchema))
 
-        // Log the form object to see what superValidate returns
         console.log('Form:', form)
 
         if (!form.valid) {
@@ -37,7 +32,7 @@ export const actions = {
         }
 
         // @ts-ignore
-        let { id, ...updatedetail } = form.data
+        let {...updatedetail } = form.data
         const { data, error } = await supabase
             .from('staff')
             .update({ ...updatedetail })

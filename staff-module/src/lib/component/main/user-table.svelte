@@ -2,7 +2,7 @@
 // @ts-nocheck
 
     import { goto } from '$app/navigation'
-    import { selectedUser } from '$lib/store/store'
+    import { selectedUser } from '$lib/store/staffmember'
 
     export let staffMember;
     export let isStaffviewOpen = false
@@ -19,7 +19,7 @@
                 v.lastname.charAt(0).toUpperCase() +
                 v.lastname.slice(1),
             tag: `@${v.firstname}`,
-            role: v.role,
+            role: v.role || 'manager',
             id: v.id
         }
     })
