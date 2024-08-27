@@ -1,11 +1,13 @@
 <script>
-// @ts-nocheck
+    // @ts-nocheck
 
-    import { goto } from '$app/navigation'
-    import { selectedUser } from '$lib/store/staffmember'
+    import { goto } from '$app/navigation';
+    import { selectedUser } from '$lib/store/store';
+    import SideNav from '$lib/component/main/side-nav.svelte';
 
     export let staffMember;
-    export let isStaffviewOpen = false
+    export let isStaffviewOpen = false;
+    let isMenuOpen = false;
 
     $: staffMemberInTable = staffMember.map((v, i) => {
         return {
@@ -25,29 +27,58 @@
     })
 
     const handleRowClick = (profile) => {
-        // console.log(profile);
-        selectedUser.set(profile)
-        isStaffviewOpen = true
-        
-    }
+        selectedUser.set(profile);
+        isStaffviewOpen = true;
+    };
 
     const handleEditStaff = (profile) => {
         goto('/staff-member/create')
-    }
+    };
+
+    const toggleMenu = () => {
+        isMenuOpen = !isMenuOpen;
+    };
 </script>
 
-<div class="mx-8">
-    <div class="flex flex-row justify-between items-center my-6">
-        <p class="font-semibold text-text-hard text-xl leading-8">
-            Staff Member
-        </p>
+<div class="relative mx-8">
+    <!-- Burger Button -->
+    <div class="sm:flex sm:flex-row flex-col justify-between items-center my-6 w-full">
+        <div class="grid grid-cols-6 items-center my-8 sm:my-0">
+            <button on:click={toggleMenu} class="grid sm:hidden">
+                <img src="/icons/burger.svg" alt="Menu" />
+            </button>
+
+            <p class="font-semibold text-text-hard sm:text-xl text-lg leading-8 col-span-4 text-center">
+                Staff Members
+            </p>
+        </div>
 
         <button
             on:click={handleEditStaff}
-            class="flex flex-row items-center gap-2 px-[18px] py-2 bg-purple-text font-medium text-base text-white rounded-lg"
+            class="flex justify-center text-center items-center gap-2 px-[18px] py-2 w-full sm:w-fit bg-purple-text font-medium text-base text-white rounded-lg"
         >
-            <img src="/icons/plus.svg" alt="" />Staff Member
+            <img src="/icons/plus.svg" alt="Add Staff Member" />
+            Staff Member
         </button>
+    </div>
+
+    <!-- Full-screen Overlay with SideNav -->
+    <div
+        class={`fixed inset-0 bg-black bg-opacity-50 transition-opacity ${
+            isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        } z-50`}
+    >
+        <div
+            class={`fixed  h-full bg-white shadow-lg transition-transform transform ${
+                isMenuOpen ? 'translate-x-0' : '-translate-x-full'
+            }  w-full `}
+        >
+            <button on:click={toggleMenu} class="text-right">
+                <img src="/icons/close.svg" alt="Close Menu" />
+            </button>
+          
+            <SideNav />
+        </div>
     </div>
 
     <div class="my-6 overflow-x-auto border-2 border-border-color rounded-2xl">

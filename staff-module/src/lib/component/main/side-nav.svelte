@@ -1,4 +1,5 @@
-<div class="bg-white flex flex-col gap-5 mx-8 my-6 justify-center">
+
+<div class="bg-white  flex-col gap-5 mx-8 my-6 justify-center ">
     <!-- Reports Section -->
     <div class="grid grid-col-1 gap-2">
         <div class="text-sm font-bold text-text-light font-urbanist">
@@ -363,3 +364,5 @@
         </div>
     </div>
 </div>
+
+
