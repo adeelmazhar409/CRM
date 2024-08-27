@@ -82,7 +82,7 @@
         </div>
     {/if}
 
-    <div class="my-6 overflow-y-auto border-2 border-border-color rounded-2xl">
+    <div class="my-6  border-2 border-border-color rounded-2xl">
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-zinc-50">
                 <tr>
@@ -114,13 +114,13 @@
                                     class="rounded-full w-12 h-12 grid place-content-center bg-slate-50"
                                 >
                                     <p
-                                        class="font-medium text-text-light text-lg leading-28"
+                                        class="font-medium text-text-light text-base sm:text-lg leading-28"
                                     >
                                         {person.tagName}
                                     </p>
                                 </div>
                                 <div>
-                                    <p class="font-semibold text-lg leading-28">
+                                    <p class="font-semibold text-base sm:text-lg  leading-28">
                                         {person.Name}
                                     </p>
                                     <p class="text-base font-normal leading-24">
@@ -130,7 +130,7 @@
                             </div>
                         </td>
                         <td
-                            class="p-3 w-1/2 whitespace-nowrap font-normal text-lg leading-28 text-purple-hover"
+                            class="p-3 w-1/2 whitespace-nowrap font-normal text-base sm:text-lg leading-28 text-purple-hover"
                         >
                             {person.role}
                         </td>
