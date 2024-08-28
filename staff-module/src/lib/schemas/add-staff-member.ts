@@ -5,11 +5,11 @@ export const addStaffFormSchema = z.object({
     firstname: z
         .string()
         .min(2, { message: 'Please enter a vaild first name' })
-        .max(40),
+        .max(10),
     lastname: z
         .string()
         .min(2, { message: 'Please enter a vaild last name' })
-        .max(40),
+        .max(10),
     nickname: z.string().min(2).max(40),
     email: z.string().email({ message: 'Please enter a valid email address' }),
     mobile: z
@@ -17,4 +17,7 @@ export const addStaffFormSchema = z.object({
         .min(10, { message: 'Mobile number must be at least 10 digits' })
         .max(12, { message: 'Mobile number must be at most 12 digits' })
         .regex(/^\d+$/, { message: 'Please enter a valid mobile number' }),
+    image: z
+        .instanceof(File, { message: 'Please upload a file.' })
+        .refine((f) => f.size < 100_000, 'Max 100 kB upload size.').optional(),
 })
