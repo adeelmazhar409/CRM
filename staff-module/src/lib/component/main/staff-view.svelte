@@ -1,5 +1,7 @@
 <script>
-    // @ts-nocheck
+// @ts-nocheck
+
+   
     import { goto } from '$app/navigation'
     import { selectedUser } from '$lib/store/staffmember'
 
@@ -13,15 +15,15 @@
         role: 'Role',
         mobile: 'Not provided',
         nickname: 'abc',
+        image: '/icons/profile.png'
     }
-    let id = ''
+    let id = '';
     const unsubscribe = selectedUser.subscribe((value) => {
         if (value) {
             id = value.id
             let userdetail = staffMember.find((v) => {
                 return v.id === id
             })
-            // console.log('from staffview:',userdetail)
             if (userdetail) {
                 user = {
                     firstName: userdetail.firstname,
@@ -30,11 +32,11 @@
                     role: userdetail.role || 'Staff',
                     mobile: userdetail.mobile || 'Not provided',
                     nickname: userdetail.nickname || 'abc',
+                    image: userdetail.image_url || '/icons/profile.png'
                 }
             }
         }
     })
-
     const toggleStaffview = () => {
         isStaffviewOpen = !isStaffviewOpen
     }
@@ -73,7 +75,7 @@
     <div
         class="flex flex-col w-fit border-1 m-4 p-5 text-center items-center border-2 shadow rounded-lg"
     >
-        <img src="/icons/Avatar.png" class="w-16 h-16" alt="" />
+        <img src={user.image} class="w-16 h-16" alt="" />
         <div
             class=" font-sans font-semibold text-base leading-6 text-purple-600"
         >

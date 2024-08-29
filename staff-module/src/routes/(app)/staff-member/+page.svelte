@@ -18,7 +18,7 @@
         setTimeout(() => {
             showComponent = false
             // window.location.reload()
-        }, 3000) // 30 seconds
+        }, 1000) // 30 seconds
     }
 </script>
 

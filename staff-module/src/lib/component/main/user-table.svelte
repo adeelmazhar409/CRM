@@ -6,27 +6,30 @@
     import SideNav from '$lib/component/main/side-nav.svelte'
 
     export let staffMember
+    
     export let isStaffviewOpen = false
     let isMenuOpen = false
-
+    
     $: staffMemberInTable = staffMember.map((v, i) => {
         return {
             tagName:
-                v.firstname.charAt(0).toUpperCase() +
-                v.lastname.charAt(0).toUpperCase(),
+            v.firstname.charAt(0).toUpperCase() +
+            v.lastname.charAt(0).toUpperCase(),
             Name:
-                v.firstname.charAt(0).toUpperCase() +
-                v.firstname.slice(1) +
-                ' ' +
-                v.lastname.charAt(0).toUpperCase() +
-                v.lastname.slice(1),
+            v.firstname.charAt(0).toUpperCase() +
+            v.firstname.slice(1) +
+            ' ' +
+            v.lastname.charAt(0).toUpperCase() +
+            v.lastname.slice(1),
             tag: `@${v.firstname}`,
             role: v.role || 'manager',
             id: v.id,
+            img: v.image_url
         }
     })
-
+    
     const handleRowClick = (profile) => {
+        // console.log(profile);
         selectedUser.set(profile)
         isStaffviewOpen = true
     }
