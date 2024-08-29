@@ -14,7 +14,7 @@
         validators: zod(addStaffFormSchema),
         onSubmit: () => {
             width += 20
-        	loading = true;
+            loading = true
         },
         // onResult: () => {
         // 	loading = false;
@@ -41,7 +41,10 @@
         <div
             class="font-sans hidden sm:grid grid-cols-4 md:grid-cols-3 items-center w-full border-b"
         >
-            <button type="button" on:click={() => goto('/staff-member')}>
+            <button 
+            type="button" 
+            on:click={() => goto('/staff-member')}
+            >
                 <img
                     src="/icons/cross.svg"
                     alt="Close"
