@@ -1,11 +1,9 @@
 <script>
-    // @ts-nocheck
     import { superForm, fileProxy } from 'sveltekit-superforms/client'
     import { addStaffFormSchema } from '$lib/schemas/add-staff-member'
     import { goto } from '$app/navigation'
     import { zod } from 'sveltekit-superforms/adapters'
     import ProgressBar from '$lib/UI/bar.svelte'
-    import ImageUpload from '$lib/component/main/image.svelte'
 
     export let data
     let width = 20
@@ -41,10 +39,7 @@
         <div
             class="font-sans hidden sm:grid grid-cols-4 md:grid-cols-3 items-center w-full border-b"
         >
-            <button 
-            type="button" 
-            on:click={() => goto('/staff-member')}
-            >
+            <button type="button" on:click={() => goto('/staff-member')}>
                 <img
                     src="/icons/cross.svg"
                     alt="Close"

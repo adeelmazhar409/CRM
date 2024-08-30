@@ -5,7 +5,6 @@
     import { goto } from '$app/navigation'
     import { zod } from 'sveltekit-superforms/adapters'
     import ProgressBar from '$lib/UI/bar.svelte'
-    
 
     export let data
     let width = 80
@@ -69,7 +68,7 @@
             <div class="w-full">
                 {#each roles as role}
                     <label
-                        class="role-label flex items-center justify-between w-full p-4 my-2 bg-white border border-gray-300 text-gray-700 font-semibold text-lg leading-7 rounded-xl cursor-pointer"
+                        class="role-label flex items-center justify-between w-full p-4 my-2 bg-white border border-gray-300 hover:border-purple-500 text-gray-700 font-semibold text-lg leading-7 rounded-xl cursor-pointer"
                     >
                         <div class="flex items-center space-x-2">
                             <div class="text-lg text-gray-700">{role}</div>
@@ -80,23 +79,29 @@
                             name="role"
                             class="hidden"
                             value={role}
-                            bind:group={form.role}
+                            bind:group={$form.role}
                         />
-                        <span class="custom-radio"></span> <!-- Custom radio button -->
+                        <span class="custom-radio"></span>
+                        <!-- Custom radio button -->
                     </label>
                 {/each}
+                {#if $errors.role}
+                    <div class="text-red-500 text-sm mt-2">
+                        {$errors.role[0]}
+                    </div>
+                {/if}
             </div>
         </div>
     </div>
 </form>
+
 <style>
     .role-label {
         position: relative;
-        border-color: gray;
     }
 
     /* Hide the default radio button */
-    .role-label input[type="radio"] {
+    .role-label input[type='radio'] {
         display: none;
     }
 
@@ -126,11 +131,13 @@
     }
 
     /* Change the border to purple and show tick when selected */
-    .role-label input[type="radio"]:checked + .custom-radio {
-        border-color: purple;
+
+    .role-label input[type='radio']:checked + .custom-radio::after {
+        opacity: 1;
     }
 
-    .role-label input[type="radio"]:checked + .custom-radio::after {
-        opacity: 1;
+    /* Ensure the entire label gets the border color change */
+    .role-label input[type='radio']:checked ~ .custom-radio {
+        border-color: rgba(134, 0, 255, 1);
     }
 </style>

@@ -1,9 +1,8 @@
 import { RadioButtonSchema } from '$lib/schemas/role-field'
 import { supabase } from '$lib/supabaseClient'
 import { redirect } from '@sveltejs/kit'
-import { fail, superValidate, withFiles } from 'sveltekit-superforms'
+import { fail, superValidate} from 'sveltekit-superforms'
 import { zod } from 'sveltekit-superforms/adapters'
-import { v4 as uuidv4 } from 'uuid' // Import UUID for unique image names
 
 export const load = async () => {
     const form = await superValidate(zod(RadioButtonSchema))
@@ -11,58 +10,46 @@ export const load = async () => {
     return { form }
 }
 
-// export const actions = {
-//     default: async ({ request, url }) => {
-//         const formData = await request.formData()
-//         const form = await superValidate(formData, zod(ImageUploadSchema))
+export const actions = {
+    default: async ({ request, url }) => {
+        const form = await superValidate(request, zod(RadioButtonSchema))
 
-//         if (!form.valid) {
-//             console.log('Form validation failed')
-//             return fail(400, withFiles({ form }))
-//         }
+        console.log('Form:', form)
+        const staffId = url.searchParams.get('staffId')
 
-//         const image = formData.get('image')
-//         if (image instanceof File) {
-//             const staffId = url.searchParams.get('staffId')
-//             const imageName = `${staffId}/${uuidv4()}-${image.name}`
+        // Validate staffId
+        if (
+            !staffId ||
+            !/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(
+                staffId
+            )
+        ) {
+            console.log('Invalid staffId:', staffId)
+            return fail(400, {
+                form,
+                error: 'Invalid or missing staff ID',
+            })
+        }
 
-//             console.log(`Starting upload for image: ${imageName}`)
+        if (!form.valid) {
+            console.log('Form is not valid', form.errors)
+            return fail(400, {
+                form,
+            })
+        }
 
-//             const { data: uploadData, error: uploadError } =
-//                 await supabase.storage
-//                     .from('staff-images')
-//                     .upload(imageName, image)
+        console.log(form.data)
+        const { data, error: updateError } = await supabase
+            .from('staff')
+            .update({ role: form.data.role }) // assuming form.data.role contains the role value
+            .eq('id', staffId)
 
-//             if (uploadError) {
-//                 console.error('Image upload failed:', uploadError.message)
-//                 return fail(500, { error: 'Image upload failed' })
-//             }
+        if (updateError) {
+            console.log('Supabase Error:', updateError)
+            return fail(400, { error: updateError.message })
+        }
 
-//             console.log('Image uploaded successfully:', imageName)
+        throw redirect(303, `/staff-member`)
+    },
+}
 
-//             const { data } = supabase.storage
-//                 .from('staff-images')
-//                 .getPublicUrl(imageName)
-
-//             const publicURL = data.publicUrl // Accessing the correct property
-
-//             const { data: updateData, error: updateError } = await supabase
-//                 .from('staff')
-//                 .update({ image_url: publicURL })
-//                 .eq('id', staffId)
-
-//             if (updateError) {
-//                 return fail(500, {
-//                     error: 'Failed to update staff record with image URL',
-//                 })
-//             }
-
-//             console.log('Staff record updated with image URL:', publicURL)
-
-//             throw redirect(303, '/staff-member')
-//         }
-
-//         console.log('No image file provided')
-//         throw redirect(303, '/staff-member')
-//     },
-// }

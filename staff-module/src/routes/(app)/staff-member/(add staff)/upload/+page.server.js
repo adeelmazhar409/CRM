@@ -20,10 +20,10 @@ export const actions = {
             console.log('Form validation failed')
             return fail(400, withFiles({ form }))
         }
+        const staffId = url.searchParams.get('staffId')
 
         const image = formData.get('image')
         if (image instanceof File) {
-            const staffId = url.searchParams.get('staffId')
             const imageName = `${staffId}/${uuidv4()}-${image.name}`
 
             console.log(`Starting upload for image: ${imageName}`)
@@ -63,6 +63,6 @@ export const actions = {
         }
 
         console.log('No image file provided')
-        throw redirect(303, '/staff-member')
+        throw redirect(303, `/staff-member/assign-role?staffId=${staffId}`)
     },
 }
