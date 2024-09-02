@@ -3,10 +3,14 @@
     const toggle = () => (isMenuOpen = !isMenuOpen)
 </script>
 
+<<<<<<< Updated upstream
 <button on:click={toggle} class="grid sm:hidden">
     <img src="/icons/burger.svg" alt="Menu" />
 </button>
 <div class="bg-white flex flex-col gap-5 mx-4 lg:mx-8 my-6 justify-center">
+=======
+<div class="bg-white w-fit flex flex-col gap-5 mx-8 my-6 justify-center">
+>>>>>>> Stashed changes
     <!-- Reports Section -->
     <div class="grid grid-col-1 gap-2">
         <div class="text-sm font-bold text-text-light font-urbanist">
