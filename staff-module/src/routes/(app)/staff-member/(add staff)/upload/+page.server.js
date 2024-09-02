@@ -59,7 +59,7 @@ export const actions = {
 
             console.log('Staff record updated with image URL:', publicURL)
 
-            throw redirect(303, '/staff-member')
+            throw redirect(303, `/staff-member/assign-role?staffId=${staffId}`)
         }
 
         console.log('No image file provided')

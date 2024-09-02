@@ -1,10 +1,12 @@
 import { RadioButtonSchema } from '$lib/schemas/role-field'
 import { supabase } from '$lib/supabaseClient'
 import { redirect } from '@sveltejs/kit'
-import { fail, superValidate} from 'sveltekit-superforms'
+import { fail, superValidate } from 'sveltekit-superforms'
 import { zod } from 'sveltekit-superforms/adapters'
 
-export const load = async () => {
+export const load = async ({ url }) => {
+    const staffId = url.searchParams.get('staffId')
+    console.log('form role page',staffId)
     const form = await superValidate(zod(RadioButtonSchema))
 
     return { form }
@@ -52,4 +54,3 @@ export const actions = {
         throw redirect(303, `/staff-member`)
     },
 }
-
