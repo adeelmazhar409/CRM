@@ -95,6 +95,9 @@
             <div class="hidden sm:block md:mt-3 xl:mt-6 py-4">
                 <ProgressBar bind:width />
             </div>
+           
+           
+           
             <div class="grid py-4 gap-2">
                 <div
                     class="font-bold text-text-light md:text-2xl text-lg leading-8"
