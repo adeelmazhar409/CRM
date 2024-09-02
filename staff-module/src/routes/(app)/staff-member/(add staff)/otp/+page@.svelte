@@ -50,7 +50,7 @@
             </div>
         </div>
         <!-- top for mobile -->
-        <div class="flex flex-col sm:hidden w-full py-1 border-b-2">
+        <div class="flex flex-col sm:hidden w-full py-1 border-b-2 mb-6">
             <div class="font-sans grid grid-cols-4 md:grid-cols-3 items-center">
                 <button type="button" on:click={() => goto('/staff-member')}>
                     <img
@@ -84,46 +84,46 @@
                 <ProgressBar bind:width />
             </div>
 
-            <h1 class="text-xl leading-8 font-semibold">Generate Code</h1>
+            <h1 class="text-lg md:text-xl leading-8 my-2 md:my-0 font-semibold">Generate Code</h1>
             <p class=" font-normal text-base leading-7 text-gray-600 my-2">
                 This code will be used by Alfonso to sign in to POS.
             </p>
 
-            <div class=" my-9">
+            <div class=" md:my-9 my-6">
                 <label
                     for=""
-                    class=" font-semibold text-base leading-8 text-gray-800"
+                    class=" font-semibold md:text-base text-sm leading-8 text-gray-800"
                     >Gustons' Sign in Code</label
                 >
-                <div class="flex items-center">
+                <div class="flex items-center ">
                     <input
                         type="text"
-                        class="w-16 h-14 border bg-slate-50 border-gray-300 text-center rounded-s-lg"
+                        class="w-full sm:w-16 h-14 border bg-slate-50 border-gray-300 text-center rounded-s-lg"
                         maxlength="1"
                         placeholder="__"
                     />
 
                     <input
                         type="text"
-                        class="w-16 h-14 border bg-slate-50 border-gray-300 text-center"
+                        class="w-full sm:w-16 h-14 border bg-slate-50 border-gray-300 text-center"
                         maxlength="1"
                         placeholder="__"
                     />
                     <input
                         type="text"
-                        class="w-16 h-14 border bg-slate-50 border-gray-300 text-center"
+                        class="w-full sm:w-16 h-14 border bg-slate-50 border-gray-300 text-center"
                         maxlength="1"
                         placeholder="__"
                     />
                     <input
                         type="text"
-                        class="w-16 h-14 border bg-slate-50 border-gray-300 text-center"
+                        class="w-full sm:w-16 h-14 border bg-slate-50 border-gray-300 text-center"
                         maxlength="1"
                         placeholder="__"
                     />
 
                     <button
-                        class=" h-14 px-11 rounded-e-lg bg-white text-gray-700 border border-gray-300 text-base font-semibold hover:bg-gray-200"
+                        class=" h-14 sm:px-11 px-6  rounded-e-lg bg-white text-gray-700 border border-gray-300 text-base font-semibold hover:bg-gray-200"
                         >Generate</button
                     >
                 </div>
