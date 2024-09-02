@@ -57,7 +57,6 @@
             <div class="hidden md:flex justify-end">
                 <button
                     type="submit"
-                    on:click={()=>goto('/staff-member/assign-role')}
                     class="bg-purple-600 text-white w-16 p-2 rounded-lg mx-5 my-4"
                 >
                     Next
@@ -176,10 +175,6 @@
                                 </div>
                             {/if}
                         </div>
-
-                        {#if $errors.image}
-                            <div class="invalid">{$errors.image}</div>
-                        {/if}
                     </div>
 
                     <!-- Image Preview -->

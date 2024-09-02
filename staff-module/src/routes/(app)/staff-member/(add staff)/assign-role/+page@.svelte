@@ -1,48 +1,54 @@
 <script>
     // @ts-nocheck
-    import { superForm, fileProxy } from 'sveltekit-superforms/client'
+    import { superForm } from 'sveltekit-superforms/client'
     import { RadioButtonSchema } from '$lib/schemas/role-field'
     import { goto } from '$app/navigation'
     import { zod } from 'sveltekit-superforms/adapters'
     import ProgressBar from '$lib/UI/bar.svelte'
 
-    export let data
+    export let data;
     let width = 80
     let loading = false
-    const { form, errors } = superForm(data.form, {
-        validators: zod(RadioButtonSchema),
-        // onResult: () => {
-        //     width += 20
-        //     console.log('Form submission result:', form)
-        // },
-        // onError: ({ result }) => {
-        //     console.log('Form submission error:', result)
-        // },
-    })
 
-    let roles = ['Service Staff', 'Kitchen Staff', 'Manager', 'Owner']
+    const { form, errors, message } = superForm(data.form,
+        {
+            validators: zod(RadioButtonSchema),
+        }
+    )
+
+    let roles = ['Kitchen Staff', 'Service Staff', 'Manager', 'Owner']
+
+    $: console.log('message;', $message)
 </script>
 
+<!-- {#if $message}
+    <div class="text-red-500 text-sm mt-2">
+        {$message}
+    </div>
+{/if} -->
 <form method="POST">
     <div class="flex flex-col items-center w-full">
-        <div class="font-sans grid grid-cols-3 items-center w-screen border-b">
-            <button
-                type="button"
-                class="cursor-pointer"
-                on:click={() => goto('/staff-member')}
-            >
+        <!-- Top for desktop -->
+        <div
+            class="font-sans hidden sm:grid grid-cols-4 md:grid-cols-3 items-center w-full border-b"
+        >
+            <button type="button" on:click={() => goto('/staff-member')}>
                 <img
                     src="/icons/cross.svg"
                     alt="Close"
-                    class="mx-3 my-5 w-8 h-8"
+                    class="mx-3 my-5 md:w-8 md:h-8"
                 />
             </button>
-            <h2 class="text-center font-semibold text-2xl leading-8">
-                Update Details
+
+            <h2
+                class="mx-auto font-semibold md:text-2xl text-lg leading-8 col-span-2 md:col-span-1"
+            >
+                Add Staff Member
             </h2>
-            <div class="flex justify-end">
+            <div class="hidden md:flex justify-end">
                 <button
                     type="submit"
+                    on:click={() => goto('/staff-member')}
                     class="bg-purple-600 text-white w-16 p-2 rounded-lg mx-5 my-4"
                 >
                     Next
@@ -50,10 +56,41 @@
             </div>
         </div>
 
-        <div class="flex w-1/3 my-10 flex-col">
-            <ProgressBar bind:width />
+        <!-- Top for mobile -->
+        <div class="flex flex-col sm:hidden w-full py-1 border-b-2">
+            <div class="font-sans grid grid-cols-4 md:grid-cols-3 items-center">
+                <button type="button" on:click={() => goto('/staff-member')}>
+                    <img
+                        src="/icons/cross.svg"
+                        alt="Close"
+                        class="m-1 w-10 h-10"
+                    />
+                </button>
 
-            <div class="py-10">
+                <h2
+                    class="mx-auto font-semibold md:text-2xl text-lg leading-8 col-span-2 md:col-span-1"
+                >
+                    Add Staff Member
+                </h2>
+                <div class="hidden md:flex justify-end">
+                    <button
+                        type="submit"
+                        class="bg-purple-600 text-white w-16 p-2 rounded-lg mx-5"
+                    >
+                        Next
+                    </button>
+                </div>
+            </div>
+            <div class="mx-4">
+                <ProgressBar bind:width />
+            </div>
+        </div>
+
+        <div class="px-4 my-2 w-full sm:w-1/2 lg:w-2/5">
+            <div class="hidden sm:block md:mt-3 xl:mt-6 py-4">
+                <ProgressBar bind:width />
+            </div>
+            <div class="py-6">
                 <div class="text-gray-700 text-xl font-bold leading-28">
                     Assign Role
                 </div>
@@ -85,12 +122,20 @@
                         <!-- Custom radio button -->
                     </label>
                 {/each}
-                {#if $errors.role}
-                    <div class="text-red-500 text-sm mt-2">
-                        {$errors.role[0]}
+                {#if $message}
+                    <div class="text-red-500 text-base font-medium text-center my-4">
+                        {$message}
                     </div>
                 {/if}
             </div>
+        </div>
+        <div class="fixed bottom-0 flex w-full md:hidden border-t">
+            <button
+                type="submit"
+                class="bg-purple-600 text-white w-full p-2 rounded-lg mx-5 my-4"
+            >
+                Next
+            </button>
         </div>
     </div>
 </form>
@@ -100,12 +145,10 @@
         position: relative;
     }
 
-    /* Hide the default radio button */
     .role-label input[type='radio'] {
         display: none;
     }
 
-    /* Custom radio button */
     .custom-radio {
         display: inline-block;
         width: 1.5rem;
@@ -116,7 +159,6 @@
         cursor: pointer;
     }
 
-    /* Tick mark when selected */
     .custom-radio::after {
         content: '';
         position: absolute;
@@ -124,19 +166,16 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background-image: url('/icons/tick.svg'); /* Use your tick icon here */
+        background-image: url('/icons/tick.svg');
         background-size: cover;
         opacity: 0;
         transition: opacity 0.2s ease-in-out;
     }
 
-    /* Change the border to purple and show tick when selected */
-
     .role-label input[type='radio']:checked + .custom-radio::after {
         opacity: 1;
     }
 
-    /* Ensure the entire label gets the border color change */
     .role-label input[type='radio']:checked ~ .custom-radio {
         border-color: rgba(134, 0, 255, 1);
     }
