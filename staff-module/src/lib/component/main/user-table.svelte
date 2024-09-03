@@ -34,7 +34,7 @@
         isStaffviewOpen = true
     }
 
-    const handleEditStaff = (profile) => {
+    const handleAddStaff = (profile) => {
         goto('/staff-member/create')
     }
 
@@ -60,7 +60,7 @@
         </div>
 
         <button
-            on:click={handleEditStaff}
+            on:click={handleAddStaff}
             class="flex justify-center text-center items-center gap-2 px-[18px] py-2 w-full sm:w-fit bg-purple-text font-medium text-base text-white rounded-lg"
         >
             <img src="/icons/plus.svg" alt="Add Staff Member" />
