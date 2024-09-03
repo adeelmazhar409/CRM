@@ -5,19 +5,16 @@
     import { goto } from '$app/navigation'
     import { zod } from 'sveltekit-superforms/adapters'
     import ProgressBar from '$lib/UI/bar.svelte'
+    import { progress } from '$lib/store/progress'
     import ImageUpload from '$lib/component/main/image.svelte'
 
     export let data
-    let width = 20
-    let loading = false
+
     const { form, errors } = superForm(data.form, {
         validators: zod(ImageUploadSchema),
         onResult: () => {
-            width += 20
+            progress.update((n) => Math.min(n + 20, 60))
             console.log('Form submission result:', form)
-        },
-        onError: ({ result }) => {
-            console.log('Form submission error:', result)
         },
     })
 
@@ -32,6 +29,10 @@
     const openFileExplorer = (event) => {
         event.preventDefault()
         document.querySelector('input[type="file"]').click()
+    }
+
+    $: {
+        if ($file?.length) progress.update((n) => Math.min(n + 20, 60))
     }
 </script>
 
@@ -89,16 +90,14 @@
                 </div>
             </div>
             <div class="mx-4">
-                <ProgressBar bind:width />
+                <ProgressBar />
             </div>
         </div>
 
         <div class="px-4 my-2 w-full sm:w-1/2 lg:w-2/5">
             <div class="hidden sm:block md:mt-3 xl:mt-6 py-4">
-                <ProgressBar bind:width />
+                <ProgressBar />
             </div>
-           
-           
 
             <div class=" py-6 md:py-10">
                 <div class="text-gray-700 text-xl font-bold leading-28">

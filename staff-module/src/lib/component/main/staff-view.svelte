@@ -1,7 +1,5 @@
 <script>
 // @ts-nocheck
-
-   
     import { goto } from '$app/navigation'
     import { selectedUser } from '$lib/store/staffmember'
 

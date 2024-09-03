@@ -1,38 +1,43 @@
 <script>
-    import { superForm, fileProxy } from 'sveltekit-superforms/client'
+    import { superForm } from 'sveltekit-superforms/client'
     import { addStaffFormSchema } from '$lib/schemas/add-staff-member'
     import { goto } from '$app/navigation'
     import { zod } from 'sveltekit-superforms/adapters'
     import ProgressBar from '$lib/UI/bar.svelte'
+    import { progress } from '$lib/store/progress'
 
     export let data
-    let width = 20
-    let loading = false
+
     const { form, errors } = superForm(data.form, {
         validators: zod(addStaffFormSchema),
         onSubmit: () => {
-            width += 20
-            loading = true
-        },
-        // onResult: () => {
-        // 	loading = false;
-        // },
-        onError: ({ result }) => {
-            console.log(result)
-            loading = false
+            if (
+                $form.firstname &&
+                $form.lastname &&
+                $form.email 
+            )
+                progress.update((n) => Math.min(n + 5, 40))
+            console.log('Form submission result:', form)
         },
     })
 
-       let isEditable = true
+    let isEditable = true
 
-    $: if (isEditable && $form.firstname) {
-        $form.nickname = $form.firstname.toLowerCase()
-    } else {
-        $form.nickname = ''
+    $: if (isEditable) {
+        $form.nickname = $form.firstname ? $form.firstname.toLowerCase() : ''
     }
 
     function handleEdit() {
         isEditable = false
+    }
+    $: {
+        if ($form.firstname) progress.update((n) => Math.min(n + 5, 15))
+        if ($form.firstname && $form.lastname)
+            progress.update((n) => Math.min(n + 10, 25))
+        if ($form.firstname && $form.lastname && $form.email)
+            progress.update((n) => Math.min(n + 10, 35))
+        if ($form.firstname && $form.lastname && $form.email && $form.mobile)
+            progress.update((n) => Math.min(n + 5, 40))
     }
 </script>
 
@@ -90,17 +95,15 @@
                 </div>
             </div>
             <div class="mx-4">
-                <ProgressBar bind:width />
+                <ProgressBar />
             </div>
         </div>
 
         <div class="px-4 my-2 w-full sm:w-1/2 lg:w-2/5">
             <div class="hidden sm:block md:mt-3 xl:mt-6 py-4">
-                <ProgressBar bind:width />
+                <ProgressBar />
             </div>
-           
-           
-           
+
             <div class="grid py-4 gap-2">
                 <div
                     class="font-bold text-text-light md:text-2xl text-lg leading-8"

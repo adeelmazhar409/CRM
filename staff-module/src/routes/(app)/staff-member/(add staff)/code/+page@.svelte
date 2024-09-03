@@ -3,6 +3,7 @@
     import { goto } from '$app/navigation'
     import { zod } from 'sveltekit-superforms/adapters'
     import ProgressBar from '$lib/UI/bar.svelte'
+    import { progress } from '$lib/store/progress'
     import { AddStaffCodeSchema } from '$lib/schemas/code'
     import { writable } from 'svelte/store'
 
@@ -11,15 +12,11 @@
 
     const code = writable(['', '', '', ''])
 
-    // let loading = false
     const { form, errors } = superForm(data.form, {
         validators: zod(AddStaffCodeSchema),
-        onResult: () => {
-            width += 20
+        onSubmit: () => {
+            if ($form.code) progress.update((n) => Math.min(n + 20, 100))
             console.log('Form submission result:', form)
-        },
-        onError: ({ result }) => {
-            console.log('Form submission error:', result)
         },
     })
     const generateCode = () => {
@@ -30,13 +27,13 @@
         console.log(newCode.join(''))
         $form.code = newCode.join('')
     }
-    let email = data.staff.email;
+    let email = data.staff.email
 
     const sendEmail = async () => {
-        const generatedCode = $code.join('');
+        const generatedCode = $code.join('')
         if (!generatedCode) {
-            console.error('Code is not generated yet.');
-            return;
+            console.error('Code is not generated yet.')
+            return
         }
 
         try {
@@ -50,17 +47,21 @@
                     code: generatedCode,
                     staffName: data.staff.firstname,
                 }),
-            });
+            })
 
             if (response.ok) {
-                console.log('Email sent successfully.');
+                console.log('Email sent successfully.')
             } else {
-                console.error('Failed to send email.');
+                console.error('Failed to send email.')
             }
         } catch (error) {
-            console.error('Error sending email:', error);
+            console.error('Error sending email:', error)
         }
-    };
+    }
+
+    $: {
+        if ($form.code) progress.update((n) => Math.min(n + 5, 40))
+    }
 </script>
 
 <form method="POST">
@@ -117,13 +118,13 @@
                 </div>
             </div>
             <div class="mx-4">
-                <ProgressBar bind:width />
+                <ProgressBar />
             </div>
         </div>
 
         <div class="px-4 my-2 w-full sm:w-1/2 lg:w-2/5">
             <div class="hidden sm:block md:mt-3 xl:mt-6 py-4">
-                <ProgressBar bind:width />
+                <ProgressBar />
             </div>
 
             <h1 class="text-lg md:text-xl my-2 font-semibold">Generate Code</h1>

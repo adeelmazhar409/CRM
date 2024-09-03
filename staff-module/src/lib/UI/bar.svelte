@@ -1,12 +1,13 @@
 <script>
-    export let width = 0
+    import { progress } from '$lib/store/progress'
+    $: console.log($progress);
 </script>
 
 <div class="relative">
     <div class="w-full bg-gray-200 rounded h-1 flex">
         <div
             class="bg-green-500 h-[5px] rounded-l transition-all duration-500"
-            style="width: {width}%"
+            style="width: {$progress}%"
         ></div>
     </div>
 

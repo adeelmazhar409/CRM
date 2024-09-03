@@ -256,7 +256,7 @@
 
     <!-- POS Access Management Section -->
     <div class="grid grid-col-1 gap-2">
-        <div class="text-sm font-bold text-text-light font-urbanist">
+        <div class="text-sm` font-bold text-text-light font-urbanist">
             POS Access Management
         </div>
 

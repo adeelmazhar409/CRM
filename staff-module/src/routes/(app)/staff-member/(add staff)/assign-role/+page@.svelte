@@ -5,27 +5,25 @@
     import { goto } from '$app/navigation'
     import { zod } from 'sveltekit-superforms/adapters'
     import ProgressBar from '$lib/UI/bar.svelte'
+    import { progress } from '$lib/store/progress'
 
-    export let data;
-    let width = 80
-    let loading = false
+    export let data
 
-    const { form, errors, message } = superForm(data.form,
-        {
-            validators: zod(RadioButtonSchema),
-        }
-    )
+    const { form, errors, message } = superForm(data.form, {
+        validators: zod(RadioButtonSchema),
+        onSubmit: () => {
+            if ($form.role) progress.update((n) => Math.min(n + 20, 80))
+            console.log('Form submission result:', form)
+        },
+    })
 
     let roles = ['Kitchen Staff', 'Service Staff', 'Manager', 'Owner']
 
-    $: console.log('message;', $message)
+    $: {
+        if ($form.role) progress.update((n) => Math.min(n + 20, 80))
+    }
 </script>
 
-<!-- {#if $message}
-    <div class="text-red-500 text-sm mt-2">
-        {$message}
-    </div>
-{/if} -->
 <form method="POST">
     <div class="flex flex-col items-center w-full">
         <!-- Top for desktop -->
@@ -81,13 +79,13 @@
                 </div>
             </div>
             <div class="mx-4">
-                <ProgressBar bind:width />
+                <ProgressBar />
             </div>
         </div>
 
         <div class="px-4 my-2 w-full sm:w-1/2 lg:w-2/5">
             <div class="hidden sm:block md:mt-3 xl:mt-6 py-4">
-                <ProgressBar bind:width />
+                <ProgressBar />
             </div>
             <div class="py-6">
                 <div class="text-gray-700 text-xl font-bold leading-28">
@@ -122,7 +120,9 @@
                     </label>
                 {/each}
                 {#if $message}
-                    <div class="text-red-500 text-base font-medium text-center my-4">
+                    <div
+                        class="text-red-500 text-base font-medium text-center my-4"
+                    >
                         {$message}
                     </div>
                 {/if}
