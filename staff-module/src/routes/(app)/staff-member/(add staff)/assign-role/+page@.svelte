@@ -48,7 +48,6 @@
             <div class="hidden md:flex justify-end">
                 <button
                     type="submit"
-                    on:click={() => goto('/staff-member')}
                     class="bg-purple-600 text-white w-16 p-2 rounded-lg mx-5 my-4"
                 >
                     Next

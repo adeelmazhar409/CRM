@@ -49,6 +49,6 @@ export const actions = {
             return fail(400, { error: updateError.message })
         }
 
-        throw redirect(303, `/staff-member/otp?staffId=${staffId}`)
+        throw redirect(303, `/staff-member/code?staffId=${staffId}`)
     },
 }

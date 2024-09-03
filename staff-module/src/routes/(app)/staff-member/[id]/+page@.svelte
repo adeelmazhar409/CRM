@@ -22,8 +22,10 @@
 
     let isEditable = true
 
-    $: if (isEditable) {
+    $: if (isEditable && $form.firstname) {
         $form.nickname = $form.firstname.toLowerCase()
+    } else {
+        $form.nickname = ''
     }
 
     function handleEdit() {
