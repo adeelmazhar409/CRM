@@ -18,3 +18,18 @@ export const editStaffFormSchema = z.object({
         .max(12, { message: 'Mobile number must be at most 12 digits' })
         .regex(/^\d+$/, { message: 'Please enter a valid mobile number' }),
 })
+
+
+export const RadioButtonSchema = z.object({
+    role: z
+        .enum(['', 'Service Staff', 'Kitchen Staff', 'Manager', 'Owner'], {
+            required_error: 'Role is required',
+            invalid_type_error: 'Invalid role',
+        })
+        .refine(
+            (value) => value !== undefined && value !== null && value !== '',
+            {
+                message: 'Assign a role to continue.',
+            }
+        ),
+})
