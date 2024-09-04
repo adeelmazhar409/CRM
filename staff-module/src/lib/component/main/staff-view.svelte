@@ -31,13 +31,18 @@
                     role: userdetail.role || 'Staff',
                     mobile: userdetail.mobile || 'Not provided',
                     nickname: userdetail.nickname || 'abc',
-                    image: userdetail.image_url || '/icons/profile.png'
+                    image: userdetail.image_url || '/icons/profile.png',
+                    code: userdetail.code || 1234
                 }
             }
         }
     })
-   
-   
+    
+    let showCode = false;
+    function toggleCodeVisibility() {
+        showCode = !showCode; // Toggle the visibility state
+    }
+
     const toggleStaffview = () => {
         isStaffviewOpen = !isStaffviewOpen
     }
@@ -52,6 +57,10 @@
    
     const handleAssignRole = () => {
         goto(`staff-member/update/role/${id}`)
+    }
+
+    const handleCode = () => {
+        goto(`staff-member/update/code/${id}`)
     }
    
 
@@ -181,17 +190,35 @@
             class="flex flex-row justify-between items-center w-full text-text-hard"
         >
             <div class="text-lg leading-7 font-bold">POS Sign In Code</div>
-            <div class="font-semibold text-base leading-6 text-purple-600">
+            <button 
+            on:click={handleCode}
+            class="font-semibold text-base leading-6 text-purple-600">
                 Reset
-            </div>
+            </button>
         </div>
 
         <div class="flex w-full items-end mx-6">
-            <div class=" font-medium text-3xl text-text-hard">****</div>
-            <div class=" font-semibold text-sm leading-3 text-purple-600">
-                Show Code
-            </div>
-        </div>
+    <div class="flex w-full items-end mx-6">
+    <div class="font-medium text-3xl text-text-hard">
+        {#if showCode}
+            {user.code}
+        {:else}
+            ****
+        {/if}
+    </div>
+    <button 
+        class="font-semibold text-sm leading-3 text-purple-600"
+        on:click={toggleCodeVisibility}
+    >
+        {#if showCode}
+            Hide Code
+        {:else}
+            Show Code
+        {/if}
+    </button>
+</div>
+
+</div>
     </div>
 
     <button

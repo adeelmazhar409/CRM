@@ -33,3 +33,7 @@ export const RadioButtonSchema = z.object({
             }
         ),
 })
+
+export const AddStaffCodeSchema = z.object({
+    code: z.string().min(4, 'Code must be 4 digits'),
+})

@@ -4,7 +4,8 @@
     import StaffView from '$lib/component/main/staff-view.svelte'
     import { page } from '$app/stores'
     import { slide } from 'svelte/transition'
-    import GreenTicket from '$lib/component/main/green-ticket.svelte'
+    import DeleteNotify from '$lib/component/main/delete-notify.svelte'
+    import AddNotify from '$lib/component/main/add-notify.svelte'
 
     export let data
     let { staffMember } = data
@@ -24,7 +25,12 @@
 
 {#if showComponent}
     <div transition:slide={{ y: -200 }}>
-        <GreenTicket />
+        <DeleteNotify />
+    </div>
+{/if}
+{#if showComponent}
+    <div transition:slide={{ y: -200 }}>
+        <AddNotify />
     </div>
 {/if}
 <Table bind:staffMember bind:isStaffviewOpen />
