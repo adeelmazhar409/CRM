@@ -41,6 +41,8 @@
     const toggleStaffdelete = async () => {
         goto('/staff-member/delete')
     }
+    console.log(id);
+
     const toggleEditpage = () => {
         goto(`staff-member/${id}`)
     }
