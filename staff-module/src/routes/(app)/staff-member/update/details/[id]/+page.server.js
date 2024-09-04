@@ -6,8 +6,7 @@ import { fail, superValidate } from 'sveltekit-superforms'
 import { zod } from 'sveltekit-superforms/adapters'
 
 export const load = async ({ params }) => {
-    let Id = params.id
-    console.log(params);
+let Id = params.id;
     const { data: staffMember, error } = await supabase
         .from('staff')
         .select()

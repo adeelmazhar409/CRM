@@ -2,10 +2,11 @@
 // @ts-nocheck
     import { goto } from '$app/navigation'
     import { selectedUser } from '$lib/store/staffmember'
-
+    
     export let isStaffviewOpen = false
     export let staffMember
     // console.log(staffMember);
+   
     let user = {
         firstName: 'First name',
         lastName: 'last name',
@@ -35,6 +36,8 @@
             }
         }
     })
+   
+   
     const toggleStaffview = () => {
         isStaffviewOpen = !isStaffviewOpen
     }
@@ -44,8 +47,14 @@
     console.log(id);
 
     const toggleEditpage = () => {
-        goto(`staff-member/${id}`)
+        goto(`staff-member/update/details/${id}`)
     }
+   
+    const handleAssignRole = () => {
+        goto(`staff-member/update/role/${id}`)
+    }
+   
+
 </script>
 
 <div class="bg-white flex flex-col w-full h-full overflow-y-auto">
@@ -153,9 +162,11 @@
             class="flex flex-row justify-between items-center w-full text-text-hard"
         >
             <div class="text-lg leading-7 font-bold">Assigned Role</div>
-            <div class="font-semibold text-base leading-6 text-purple-600">
+            <button 
+            on:click={handleAssignRole}
+            class="font-semibold text-base leading-6 text-purple-600">
                 Edit
-            </div>
+            </button>
         </div>
         <div class="flex w-full gap-1">
             <div class=" font-normal text-lg leading-7 text-text-hard">
