@@ -1,4 +1,4 @@
-import { ImageUploadSchema } from '$lib/schemas/upload-image'
+import { ImageUploadSchema } from '$lib/schemas/add-staff-member'
 import { supabase } from '$lib/supabaseClient'
 import { redirect } from '@sveltejs/kit'
 import { fail, superValidate, withFiles } from 'sveltekit-superforms'

@@ -24,3 +24,28 @@ export const addStaffFormSchema = z.object({
         .max(12, { message: 'Mobile number must be at most 12 digits' })
         .regex(/^\d+$/, { message: 'Please enter a valid mobile number' }),
 })
+
+export const ImageUploadSchema = z.object({
+    image: z
+        .instanceof(File, { message: 'Please upload a file.' })
+        .refine((f) => f.size < 100_000, 'Max 100 kB upload size.')
+        .optional(),
+})
+
+export const RadioButtonSchema = z.object({
+    role: z
+        .enum(['', 'Service Staff', 'Kitchen Staff', 'Manager', 'Owner'], {
+            required_error: 'Role is required',
+            invalid_type_error: 'Invalid role',
+        })
+        .refine(
+            (value) => value !== undefined && value !== null && value !== '',
+            {
+                message: 'Assign a role to continue.',
+            }
+        ),
+})
+
+export const AddStaffCodeSchema = z.object({
+    code: z.string().min(4, 'Code must be 4 digits'),
+})

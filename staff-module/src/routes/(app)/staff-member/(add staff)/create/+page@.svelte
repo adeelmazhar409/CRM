@@ -5,20 +5,12 @@
     import { zod } from 'sveltekit-superforms/adapters'
     import ProgressBar from '$lib/UI/bar.svelte'
     import { progress } from '$lib/store/progress'
+    import { onMount } from 'svelte'
 
     export let data
 
     const { form, errors } = superForm(data.form, {
         validators: zod(addStaffFormSchema),
-        onSubmit: () => {
-            if (
-                $form.firstname &&
-                $form.lastname &&
-                $form.email 
-            )
-                progress.update((n) => Math.min(n + 5, 40))
-            console.log('Form submission result:', form)
-        },
     })
 
     let isEditable = true
@@ -30,6 +22,7 @@
     function handleEdit() {
         isEditable = false
     }
+
     $: {
         if ($form.firstname) progress.update((n) => Math.min(n + 5, 15))
         if ($form.firstname && $form.lastname)
@@ -38,7 +31,12 @@
             progress.update((n) => Math.min(n + 10, 35))
         if ($form.firstname && $form.lastname && $form.email && $form.mobile)
             progress.update((n) => Math.min(n + 5, 40))
+        if ($form.firstname && $form.lastname && $form.email)
+        localStorage.setItem('progresslevel', '40')
     }
+    onMount(() => {
+        localStorage.clear()
+    })
 </script>
 
 <form method="POST">

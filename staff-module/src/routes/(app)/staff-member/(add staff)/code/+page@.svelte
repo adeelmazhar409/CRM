@@ -4,8 +4,9 @@
     import { zod } from 'sveltekit-superforms/adapters'
     import ProgressBar from '$lib/UI/bar.svelte'
     import { progress } from '$lib/store/progress'
-    import { AddStaffCodeSchema } from '$lib/schemas/code'
+    import { AddStaffCodeSchema } from '$lib/schemas/add-staff-member'
     import { writable } from 'svelte/store'
+    import { onMount } from 'svelte'
 
     export let data
     let width = 90
@@ -60,8 +61,15 @@
     }
 
     $: {
-        if ($form.code) progress.update((n) => Math.min(n + 5, 40))
+        if ($form.code) progress.update((n) => Math.min(n + 20, 100))
+        if ($form.code) localStorage.setItem('progresslevel', '100')
     }
+
+    onMount(() => {
+        let value = localStorage.getItem('progresslevel')
+        console.log(value)
+        progress.set(Number(value))
+    })
 </script>
 
 <form method="POST">

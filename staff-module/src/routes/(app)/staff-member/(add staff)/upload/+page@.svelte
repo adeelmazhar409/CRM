@@ -1,21 +1,18 @@
 <script>
     // @ts-nocheck
     import { superForm, fileProxy } from 'sveltekit-superforms/client'
-    import { ImageUploadSchema } from '$lib/schemas/upload-image'
+    import { ImageUploadSchema } from '$lib/schemas/add-staff-member'
     import { goto } from '$app/navigation'
     import { zod } from 'sveltekit-superforms/adapters'
     import ProgressBar from '$lib/UI/bar.svelte'
     import { progress } from '$lib/store/progress'
     import ImageUpload from '$lib/component/main/image.svelte'
+    import { onMount } from 'svelte'
 
     export let data
 
     const { form, errors } = superForm(data.form, {
         validators: zod(ImageUploadSchema),
-        onResult: () => {
-            progress.update((n) => Math.min(n + 20, 60))
-            console.log('Form submission result:', form)
-        },
     })
 
     const file = fileProxy(form, 'image')
@@ -32,8 +29,15 @@
     }
 
     $: {
-        if ($file?.length) progress.update((n) => Math.min(n + 20, 60))
+        if ($file?.length){ progress.update((n) => Math.min(n + 20, 60))}
+        if ($file?.length) localStorage.setItem('progresslevel', '60')
     }
+
+onMount(()=>{
+    let value = localStorage.getItem('progresslevel');
+    console.log(value);
+    progress.set(Number(value))
+})
 </script>
 
 <form method="POST" enctype="multipart/form-data">

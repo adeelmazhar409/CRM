@@ -2,7 +2,7 @@ import { supabase } from '$lib/supabaseClient'
 import { redirect } from '@sveltejs/kit'
 import { fail, message, superValidate } from 'sveltekit-superforms'
 import { zod } from 'sveltekit-superforms/adapters'
-import { AddStaffCodeSchema } from '$lib/schemas/code'
+import { AddStaffCodeSchema } from '$lib/schemas/add-staff-member'
 
 export const load = async ({ url }) => {
     const staffId = url.searchParams.get('staffId')

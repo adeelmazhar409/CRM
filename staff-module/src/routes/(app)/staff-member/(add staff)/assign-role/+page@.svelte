@@ -1,11 +1,12 @@
 <script>
     // @ts-nocheck
     import { superForm } from 'sveltekit-superforms/client'
-    import { RadioButtonSchema } from '$lib/schemas/role-field'
+    import { RadioButtonSchema } from '$lib/schemas/add-staff-member'
     import { goto } from '$app/navigation'
     import { zod } from 'sveltekit-superforms/adapters'
     import ProgressBar from '$lib/UI/bar.svelte'
     import { progress } from '$lib/store/progress'
+    import { onMount } from 'svelte'
 
     export let data
 
@@ -21,7 +22,14 @@
 
     $: {
         if ($form.role) progress.update((n) => Math.min(n + 20, 80))
+        if ($form.role) localStorage.setItem('progresslevel', '80')
     }
+
+    onMount(() => {
+        let value = localStorage.getItem('progresslevel')
+        console.log(value)
+        progress.set(Number(value))
+    })
 </script>
 
 <form method="POST">
