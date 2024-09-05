@@ -26,7 +26,7 @@ export const actions = {
         if (image instanceof File) {
             const imageName = `${staffId}/${uuidv4()}-${image.name}`
 
-            console.log(`Starting upload for image: ${imageName}`)
+            // console.log(`Starting upload for image: ${imageName}`)
 
             const { data: uploadData, error: uploadError } =
                 await supabase.storage
@@ -38,7 +38,7 @@ export const actions = {
                 return fail(500, { error: 'Image upload failed' })
             }
 
-            console.log('Image uploaded successfully:', imageName)
+            // console.log('Image uploaded successfully:', imageName)
 
             const { data } = supabase.storage
                 .from('staff-images')
@@ -57,7 +57,7 @@ export const actions = {
                 })
             }
 
-            console.log('Staff record updated with image URL:', publicURL)
+            // console.log('Staff record updated with image URL:', publicURL)
 
             throw redirect(303, `/staff-member/assign-role?staffId=${staffId}`)
         }

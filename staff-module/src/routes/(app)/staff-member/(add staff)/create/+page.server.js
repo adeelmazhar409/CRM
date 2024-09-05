@@ -16,7 +16,7 @@ export const actions = {
 
         const form = await superValidate(request, zod(addStaffFormSchema))
 
-        console.log('Form:', form)
+        // console.log('Form:', form)
 
         if (!form.valid) {
             console.log('Form is not valid', form.errors)

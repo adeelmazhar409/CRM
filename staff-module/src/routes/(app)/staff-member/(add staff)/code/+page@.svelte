@@ -7,18 +7,14 @@
     import { AddStaffCodeSchema } from '$lib/schemas/add-staff-member'
     import { writable } from 'svelte/store'
     import { onMount } from 'svelte'
-
+    // import { message } from 'sveltekit-superforms'
+    
     export let data
-    let width = 90
 
     const code = writable(['', '', '', ''])
 
     const { form, errors } = superForm(data.form, {
         validators: zod(AddStaffCodeSchema),
-        onSubmit: () => {
-            if ($form.code) progress.update((n) => Math.min(n + 20, 100))
-            console.log('Form submission result:', form)
-        },
     })
     const generateCode = () => {
         const newCode = Array(4)
@@ -70,6 +66,11 @@
         console.log(value)
         progress.set(Number(value))
     })
+
+    function handleAddNotification(){
+        goto('/staff-member', { state: { message: 'AddStaff' } })
+    }
+
 </script>
 
 <form method="POST">
@@ -78,7 +79,7 @@
         <div
             class="font-sans hidden sm:grid grid-cols-4 md:grid-cols-3 items-center w-full border-b"
         >
-            <button type="button" on:click={() => goto('/staff-member')}>
+            <button type="button">
                 <img
                     src="/icons/cross.svg"
                     alt="Close"
@@ -93,6 +94,7 @@
             </h2>
             <div class="hidden md:flex justify-end">
                 <button
+                on:click={handleAddNotification}
                     type="submit"
                     class="bg-purple-600 text-white w-16 p-2 rounded-lg mx-5 my-4"
                 >
@@ -118,6 +120,7 @@
                 </h2>
                 <div class="hidden md:flex justify-end">
                     <button
+                    on:canplay={handleAddNotification}
                         type="submit"
                         class="bg-purple-600 text-white w-16 p-2 rounded-lg mx-5"
                     >
@@ -210,6 +213,7 @@
         </div>
         <div class=" fixed bottom-0 flex w-full md:hidden border-t">
             <button
+            on:click={handleAddNotification}
                 type="submit"
                 class="bg-purple-600 text-white w-full p-2 rounded-lg mx-5 my-4"
             >

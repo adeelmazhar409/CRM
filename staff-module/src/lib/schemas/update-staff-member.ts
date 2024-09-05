@@ -35,5 +35,10 @@ export const RadioButtonSchema = z.object({
 })
 
 export const AddStaffCodeSchema = z.object({
-    code: z.string().min(4, 'Code must be 4 digits'),
+    code: z
+        .string()
+        .min(
+            4,
+            'Generate a code. This code will be used by this staff to sign in to POS.'
+        ),
 })

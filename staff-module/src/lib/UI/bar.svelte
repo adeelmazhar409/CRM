@@ -1,6 +1,5 @@
 <script>
     import { progress } from '$lib/store/progress'
-    $: console.log($progress);
 </script>
 
 <div class="relative">

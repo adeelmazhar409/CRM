@@ -3,13 +3,12 @@
 
     import { goto } from '$app/navigation'
     import { selectedUser } from '$lib/store/staffmember'
-    import { message } from 'sveltekit-superforms'
+    // import { message } from 'sveltekit-superforms'
 
     let id = ''
     let name = ''
     const unsubscribe = selectedUser.subscribe((value) => {
         if (value) {
-            // console.log(value)
             id = value.id
             name = value.Name
         } else {
@@ -23,7 +22,7 @@
         })
 
         if (response.ok) {
-            goto('/staff-member', { state: { message: true } })
+            goto('/staff-member', { state: { message: 'DeleteStaff' } })
         } else {
             const error = await response.json()
             console.error('Error deleting client:', error)

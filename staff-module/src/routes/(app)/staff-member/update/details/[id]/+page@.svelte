@@ -6,30 +6,22 @@
 
     export let data
 
-    const { form, errors } = superForm(data.form, {
+    const { form, errors, validate } = superForm(data.form, {
         validators: zod(editStaffFormSchema),
-        // onSubmit: () => {
-        // 	loading = true;
-        // },
-        // onResult: () => {
-        // 	loading = false;
-        // },
-        // onError: ({ result }) => {
-        // 	console.log(result);
-        // 	// loading = false;
-        // }
     })
 
     let isEditable = true
 
-    $: if (isEditable && $form.firstname) {
-        $form.nickname = $form.firstname.toLowerCase()
-    } else {
-        $form.nickname = ''
+    $: if (isEditable) {
+        $form.nickname = $form.firstname ? $form.firstname.toLowerCase() : ''
     }
 
     function handleEdit() {
         isEditable = false
+    }
+
+    function validateInput(field) {
+        validate(field)
     }
 </script>
 
@@ -87,6 +79,7 @@
                                 ? 'border-red-500 focus:outline-none'
                                 : 'border focus:ring-1 focus:ring-black'}"
                             bind:value={$form.firstname}
+                            on:input={() => validateInput('firstname')}
                         />
                         {#if $errors.firstname}
                             <span
@@ -131,6 +124,7 @@
                                 ? 'border-red-500 focus:outline-none'
                                 : 'border focus:ring-1 focus:ring-black'}"
                             bind:value={$form.lastname}
+                            on:input={() => validateInput('lastname')}
                         />
                         {#if $errors.lastname}
                             <span
@@ -204,6 +198,7 @@
                         id="email"
                         name="email"
                         bind:value={$form.email}
+                        on:input={() => validateInput('email')}
                     />
                     {#if $errors.email}
                         <span
@@ -248,6 +243,7 @@
                         id="mobile"
                         name="mobile"
                         bind:value={$form.mobile}
+                        on:input={() => validateInput('mobile')}
                     />
                     {#if $errors.mobile}
                         <span

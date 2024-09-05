@@ -1,4 +1,6 @@
 <script>
+// @ts-nocheck
+
     import { superForm } from 'sveltekit-superforms/client'
     import { addStaffFormSchema } from '$lib/schemas/add-staff-member'
     import { goto } from '$app/navigation'
@@ -9,7 +11,7 @@
 
     export let data
 
-    const { form, errors } = superForm(data.form, {
+    const { form, errors, validate } = superForm(data.form, {
         validators: zod(addStaffFormSchema),
     })
 
@@ -37,6 +39,10 @@
     onMount(() => {
         localStorage.clear()
     })
+
+    function validateInput(field) {
+        validate(field)
+    }
 </script>
 
 <form method="POST">
@@ -135,6 +141,7 @@
                                 ? 'border-red-500 focus:outline-none'
                                 : 'border focus:ring-1 focus:ring-black'}"
                             bind:value={$form.firstname}
+                            on:input={() => validateInput('firstname')}
                         />
                         {#if $errors.firstname}
                             <span
@@ -179,6 +186,7 @@
                                 ? 'border-red-500 focus:outline-none'
                                 : 'border focus:ring-1 focus:ring-black'}"
                             bind:value={$form.lastname}
+                            on:input={() => validateInput('lastname')}
                         />
                         {#if $errors.lastname}
                             <span
@@ -252,6 +260,7 @@
                         id="email"
                         name="email"
                         bind:value={$form.email}
+                        on:input={() => validateInput('email')}
                     />
                     {#if $errors.email}
                         <span
@@ -296,6 +305,7 @@
                         id="mobile"
                         name="mobile"
                         bind:value={$form.mobile}
+                        on:input={() => validateInput('mobile')}
                     />
                     {#if $errors.mobile}
                         <span

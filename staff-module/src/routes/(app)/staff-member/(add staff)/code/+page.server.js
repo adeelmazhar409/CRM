@@ -12,7 +12,7 @@ export const load = async ({ url }) => {
         .select('*')
         .eq('id', staffId)
         .single()
-    console.log(staff, staffId)
+    // console.log(staff, staffId)
 
     const form = await superValidate(zod(AddStaffCodeSchema))
 
@@ -24,7 +24,7 @@ export const actions = {
         const form = await superValidate(request, zod(AddStaffCodeSchema))
         const staffId = url.searchParams.get('staffId')
 
-        console.log('Form:', form)
+        // console.log('Form:', form)
 
         if (!form.valid) {
             console.log('Form is not valid', form.errors)

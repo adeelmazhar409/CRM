@@ -6,7 +6,7 @@ import { zod } from 'sveltekit-superforms/adapters'
 
 export const load = async ({ url }) => {
     const staffId = url.searchParams.get('staffId')
-    console.log('form role page', staffId)
+    // console.log('form role page', staffId)
     const form = await superValidate(zod(RadioButtonSchema))
 
     return { form }
@@ -16,7 +16,7 @@ export const actions = {
     default: async ({ request, url }) => {
         const form = await superValidate(request, zod(RadioButtonSchema))
 
-        console.log('Form:', form)
+        // console.log('Form:', form)
         const staffId = url.searchParams.get('staffId')
 
         // Validate staffId
@@ -38,7 +38,7 @@ export const actions = {
             return message(form, form.errors.role)
         }
 
-        console.log(form.data)
+        // console.log(form.data)
         const { data, error: updateError } = await supabase
             .from('staff')
             .update({ role: form.data.role }) // assuming form.data.role contains the role value

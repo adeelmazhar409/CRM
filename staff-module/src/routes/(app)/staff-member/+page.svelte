@@ -1,40 +1,48 @@
 <script>
-    // @ts-nocheck
-    import Table from '$lib/component/main/user-table.svelte'
-    import StaffView from '$lib/component/main/staff-view.svelte'
-    import { page } from '$app/stores'
-    import { slide } from 'svelte/transition'
-    import DeleteNotify from '$lib/component/main/delete-notify.svelte'
-    import AddNotify from '$lib/component/main/add-notify.svelte'
+// @ts-nocheck
+    import Table from '$lib/component/main/user-table.svelte';
+    import StaffView from '$lib/component/main/staff-view.svelte';
+    import { page } from '$app/stores';
+    import { slide } from 'svelte/transition';
+    import DeleteNotify from '$lib/component/main/delete-notify.svelte';
+    import AddNotify from '$lib/component/main/add-notify.svelte';
 
-    export let data
-    let { staffMember } = data
-    let message = false
-    let isStaffviewOpen = false
-    $: message = $page.state.message
-    let showComponent = false
+    export let data;
+    let { staffMember } = data;
+    let message = false;
+    let isStaffviewOpen = false;
+    let showDeleteNotification = false;
+    let showAddNotification = false;
 
-    $: if (message) {
-        showComponent = true
-        setTimeout(() => {
-            showComponent = false
-            // window.location.reload()
-        }, 1000) // 30 seconds
+    $: {
+        message = $page.state.message;
+        if (message === 'DeleteStaff') {
+            showDeleteNotification = true;
+            setTimeout(() => {
+                showDeleteNotification = false;
+            }, 1000);
+        } else if (message === 'AddStaff') {
+            showAddNotification = true;
+            setTimeout(() => {
+                showAddNotification = false;
+            }, 1000);
+        }
     }
 </script>
 
-{#if showComponent}
+
+{#if showDeleteNotification}
     <div transition:slide={{ y: -200 }}>
         <DeleteNotify />
     </div>
 {/if}
-{#if showComponent}
+{#if showAddNotification}
     <div transition:slide={{ y: -200 }}>
         <AddNotify />
     </div>
 {/if}
 <Table bind:staffMember bind:isStaffviewOpen />
-{#if !showComponent}
+{#if !showDeleteNotification}
     <div
         class={`fixed top-0 right-0 h-full w-[28%] bg-component-bg border-2 border-border-color text-white transform 
       ${isStaffviewOpen ? 'translate-x-0' : 'translate-x-full'}
