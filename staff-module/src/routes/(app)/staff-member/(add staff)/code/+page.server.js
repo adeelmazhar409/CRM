@@ -4,7 +4,14 @@ import { fail, message, superValidate } from 'sveltekit-superforms'
 import { zod } from 'sveltekit-superforms/adapters'
 import { AddStaffCodeSchema } from '$lib/schemas/add-staff-member'
 
-export const load = async ({ url }) => {
+export const load = async ({ url, locals }) => {
+    if (!locals.formCompletion.step1) {
+        throw redirect(302, '/staff-member/create')
+    } else if (!locals.formCompletion.step2) {
+        throw redirect(302, '/staff-member/upload')
+    } else if (!locals.formCompletion.step3) {
+        throw redirect(302, '/staff-member/assign-role')
+    }
     const staffId = url.searchParams.get('staffId')
 
     let { data: staff, error } = await supabase
@@ -42,7 +49,6 @@ export const actions = {
             console.log('Supabase Error:', error)
             return fail(400, { error: error.message })
         }
-
 
         throw redirect(303, `/staff-member`)
     },

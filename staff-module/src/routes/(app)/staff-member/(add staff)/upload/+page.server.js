@@ -12,7 +12,7 @@ export const load = async () => {
 }
 
 export const actions = {
-    default: async ({ request, url }) => {
+    default: async ({cookies, request, url }) => {
         const formData = await request.formData()
         const form = await superValidate(formData, zod(ImageUploadSchema))
 
@@ -57,7 +57,16 @@ export const actions = {
                 })
             }
 
-            // console.log('Staff record updated with image URL:', publicURL)
+            cookies.set(
+                'formCompletion',
+                JSON.stringify({ step1: true, step2: true, step3: false }),
+                {
+                    path: '/',
+                    httpOnly: true,
+                    sameSite: 'strict',
+                    maxAge: 60 * 60 * 24, // Set cookie expiration (1 day in this case)
+                }
+            )
 
             throw redirect(303, `/staff-member/assign-role?staffId=${staffId}`)
         }

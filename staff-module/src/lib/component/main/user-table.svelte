@@ -6,28 +6,30 @@
     import SideNav from '$lib/component/main/side-nav.svelte'
 
     export let staffMember
-    
+
     export let isStaffviewOpen = false
     let isMenuOpen = false
-    
-    $: staffMemberInTable = staffMember.map((v, i) => {
+
+    $: staffMemberInTable = [
+        ...staffMember,
+    ].map((v, i) => {
         return {
             tagName:
-            v.firstname.charAt(0).toUpperCase() +
-            v.lastname.charAt(0).toUpperCase(),
+                v.firstname.charAt(0).toUpperCase() +
+                v.lastname.charAt(0).toUpperCase(),
             Name:
-            v.firstname.charAt(0).toUpperCase() +
-            v.firstname.slice(1) +
-            ' ' +
-            v.lastname.charAt(0).toUpperCase() +
-            v.lastname.slice(1),
+                v.firstname.charAt(0).toUpperCase() +
+                v.firstname.slice(1) +
+                ' ' +
+                v.lastname.charAt(0).toUpperCase() +
+                v.lastname.slice(1),
             tag: `@${v.firstname}`,
             role: v.role || 'manager',
             id: v.id,
-            img: v.image_url
+            img: v.image_url,
         }
     })
-    
+
     const handleRowClick = (profile) => {
         // console.log(profile);
         selectedUser.set(profile)
@@ -76,7 +78,7 @@
         <SideNav bind:isMenuOpen />
     </div>
 
-    <div class="my-6  border-2 border-border-color rounded-2xl">
+    <div class="my-6 border-2 border-border-color rounded-2xl">
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-zinc-50">
                 <tr>
@@ -94,7 +96,7 @@
                     </th>
                 </tr>
             </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
+            <tbody class="bg-white divide-y overflow-scroll divide-gray-200">
                 {#each staffMemberInTable as person}
                     <tr
                         class="hover:bg-zinc-50 cursor-pointer"
@@ -114,7 +116,9 @@
                                     </p>
                                 </div>
                                 <div>
-                                    <p class="font-semibold text-base sm:text-lg  leading-28">
+                                    <p
+                                        class="font-semibold text-base sm:text-lg leading-28"
+                                    >
                                         {person.Name}
                                     </p>
                                     <p class="text-base font-normal leading-24">

@@ -13,7 +13,7 @@ export const load = async ({ url }) => {
 }
 
 export const actions = {
-    default: async ({ request, url }) => {
+    default: async ({cookies, request, url }) => {
         const form = await superValidate(request, zod(RadioButtonSchema))
 
         // console.log('Form:', form)
@@ -49,6 +49,16 @@ export const actions = {
             return fail(400, { error: updateError.message })
         }
 
+       cookies.set(
+           'formCompletion',
+           JSON.stringify({ step1: true, step2: true, step3: true }),
+           {
+               path: '/',
+               httpOnly: true,
+               sameSite: 'strict',
+               maxAge: 60 * 60 * 24, // Set cookie expiration (1 day in this case)
+           }
+       )
         throw redirect(303, `/staff-member/code?staffId=${staffId}`)
     },
 }

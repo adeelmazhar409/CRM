@@ -1,5 +1,4 @@
 <script>
-    // @ts-nocheck
     import Footer from '$lib/component/footer.svelte'
     import Header from '$lib/component/header.svelte'
     import SideNav from '$lib/component/main/side-nav.svelte'

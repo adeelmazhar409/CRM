@@ -3,7 +3,13 @@
 declare global {
 	namespace App {
 		// interface Error {}
-		// interface Locals {}
+		interface Locals {
+            formCompletion: {
+                step1: boolean
+                step2: boolean
+                step3: boolean
+            }
+        }
 		// interface PageData {}
 		// interface PageState {}
 		// interface Platform {}
