@@ -1,62 +1,48 @@
 <script>
     // @ts-nocheck
+    import { goto } from '$app/navigation';
+    import { selectedUser } from '$lib/store/staffmember';
+    import SideNav from '$lib/component/main/side-nav.svelte';
 
-    import { goto } from '$app/navigation'
-    import { selectedUser } from '$lib/store/staffmember'
-    import SideNav from '$lib/component/main/side-nav.svelte'
+    export let staffMember;
+    export let isStaffviewOpen = false;
+    let isMenuOpen = false;
 
-    export let staffMember
-
-    export let isStaffviewOpen = false
-    let isMenuOpen = false
-
-    $: staffMemberInTable = [
-        ...staffMember,
-    ].map((v, i) => {
-        return {
-            tagName:
-                v.firstname.charAt(0).toUpperCase() +
-                v.lastname.charAt(0).toUpperCase(),
-            Name:
-                v.firstname.charAt(0).toUpperCase() +
-                v.firstname.slice(1) +
-                ' ' +
-                v.lastname.charAt(0).toUpperCase() +
-                v.lastname.slice(1),
-            tag: `@${v.firstname}`,
-            role: v.role || 'manager',
-            id: v.id,
-            img: v.image_url,
-        }
-    })
+    $: staffMemberInTable = staffMember.map((v) => ({
+        tagName: v.firstname.charAt(0).toUpperCase() + v.lastname.charAt(0).toUpperCase(),
+        Name:
+            v.firstname.charAt(0).toUpperCase() +
+            v.firstname.slice(1) +
+            ' ' +
+            v.lastname.charAt(0).toUpperCase() +
+            v.lastname.slice(1),
+        tag: `@${v.firstname}`,
+        role: v.role || 'manager',
+        id: v.id,
+        img: v.image_url,
+    }));
 
     const handleRowClick = (profile) => {
-        // console.log(profile);
-        selectedUser.set(profile)
-        isStaffviewOpen = true
-    }
+        selectedUser.set(profile);
+        isStaffviewOpen = true;
+    };
 
-    const handleAddStaff = (profile) => {
-        goto('/staff-member/create')
-    }
+    const handleAddStaff = () => {
+        goto('/staff-member/create');
+    };
 
-    const toggle = () => (isMenuOpen = !isMenuOpen)
+    const toggle = () => (isMenuOpen = !isMenuOpen);
 </script>
 
 <div class="relative mx-6 lg:mx-8">
     <!-- Burger Button -->
-    <div
-        id="hamburger"
-        class=" sm:flex sm:flex-row flex-col justify-between items-center my-6 w-full"
-    >
+    <div id="hamburger" class="sm:flex sm:flex-row flex-col justify-between items-center my-6 w-full">
         <div class="grid grid-cols-6 items-center my-8 sm:my-0">
             <button on:click={toggle} class="grid sm:hidden">
                 <img src="/icons/burger.svg" alt="Menu" />
             </button>
 
-            <p
-                class="font-semibold text-text-hard sm:text-xl text-lg leading-8 col-span-4 text-center"
-            >
+            <p class="font-semibold text-text-hard sm:text-xl text-lg leading-8 col-span-4 text-center">
                 Staff Members
             </p>
         </div>
@@ -82,59 +68,41 @@
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-zinc-50">
                 <tr>
-                    <th
-                        scope="col"
-                        class="p-3 w-1/2 text-left text-base font-bold text-text-light tracking-wider"
-                    >
+                    <th scope="col" class="p-3 w-1/2 text-left text-base font-bold text-text-light tracking-wider">
                         Name / Nickname
                     </th>
-                    <th
-                        scope="col"
-                        class="p-3 w-1/2 text-left text-base font-bold text-text-light tracking-wider"
-                    >
+                    <th scope="col" class="p-3 w-1/2 text-left text-base font-bold text-text-light tracking-wider">
                         Role
                     </th>
                 </tr>
             </thead>
-            <tbody class="bg-white divide-y overflow-scroll divide-gray-200">
-                {#each staffMemberInTable as person}
-                    <tr
-                        class="hover:bg-zinc-50 cursor-pointer"
-                        on:click={() => handleRowClick(person)}
-                    >
-                        <td
-                            class="p-3 w-1/2 whitespace-nowrap text-sm font-medium text-gray-900"
-                        >
-                            <div class="flex flex-row gap-3">
-                                <div
-                                    class="rounded-full w-12 h-12 grid place-content-center bg-slate-50"
-                                >
-                                    <p
-                                        class="font-medium text-text-light text-base sm:text-lg leading-28"
-                                    >
-                                        {person.tagName}
-                                    </p>
-                                </div>
-                                <div>
-                                    <p
-                                        class="font-semibold text-base sm:text-lg leading-28"
-                                    >
-                                        {person.Name}
-                                    </p>
-                                    <p class="text-base font-normal leading-24">
-                                        {person.tag}
-                                    </p>
-                                </div>
-                            </div>
-                        </td>
-                        <td
-                            class="p-3 w-1/2 whitespace-nowrap font-normal text-base sm:text-lg leading-28 text-purple-hover"
-                        >
-                            {person.role}
-                        </td>
-                    </tr>
-                {/each}
-            </tbody>
         </table>
+        <!-- Add the scroll container here -->
+        <div class="sm:h-[580px] h-[500px] overflow-y-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+                <tbody class="bg-white divide-y divide-gray-200">
+                    {#each staffMemberInTable as person}
+                        <tr class="hover:bg-zinc-50 cursor-pointer" on:click={() => handleRowClick(person)}>
+                            <td class="p-3 w-1/2 whitespace-nowrap text-sm font-medium text-gray-900">
+                                <div class="flex flex-row gap-3">
+                                    <div class="rounded-full w-12 h-12 grid place-content-center bg-slate-50">
+                                        <p class="font-medium text-text-light text-base sm:text-lg leading-28">
+                                            {person.tagName}
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-base sm:text-lg leading-28">{person.Name}</p>
+                                        <p class="text-base font-normal leading-24">{person.tag}</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p-3 w-1/2 whitespace-nowrap font-normal text-base sm:text-lg leading-28 text-purple-hover">
+                                {person.role}
+                            </td>
+                        </tr>
+                    {/each}
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
