@@ -4,16 +4,18 @@ import { redirect } from '@sveltejs/kit'
 import { fail, message, superValidate } from 'sveltekit-superforms'
 import { zod } from 'sveltekit-superforms/adapters'
 
-export const load = async ({ url }) => {
+export const load = async ({ cookies, url }) => {
+    const step3Data = cookies.get('step3Data')
+    const form = step3Data
+        ? await superValidate(JSON.parse(step3Data), zod(RadioButtonSchema))
+        : await superValidate(zod(RadioButtonSchema))
     const staffId = url.searchParams.get('staffId')
-    // console.log('form role page', staffId)
-    const form = await superValidate(zod(RadioButtonSchema))
 
-    return { form }
+    return { form, staffId }
 }
 
 export const actions = {
-    default: async ({cookies, request, url }) => {
+    default: async ({ cookies, request, url }) => {
         const form = await superValidate(request, zod(RadioButtonSchema))
 
         // console.log('Form:', form)
@@ -49,16 +51,20 @@ export const actions = {
             return fail(400, { error: updateError.message })
         }
 
-       cookies.set(
-           'formCompletion',
-           JSON.stringify({ step1: true, step2: true, step3: true }),
-           {
-               path: '/',
-               httpOnly: true,
-               sameSite: 'strict',
-               maxAge: 60 * 60 * 24, // Set cookie expiration (1 day in this case)
-           }
-       )
+        cookies.set('step3Data', JSON.stringify(form.data), {
+            path: '/',
+            httpOnly: true,
+        })
+        cookies.set(
+            'formCompletion',
+            JSON.stringify({ step1: true, step2: true, step3: true }),
+            {
+                path: '/',
+                httpOnly: true,
+                sameSite: 'strict',
+                maxAge: 60 * 60 * 24, // Set cookie expiration (1 day in this case)
+            }
+        )
         throw redirect(303, `/staff-member/code?staffId=${staffId}`)
     },
 }

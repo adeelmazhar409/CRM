@@ -1,6 +1,5 @@
 <script>
 // @ts-nocheck
-
     import { superForm } from 'sveltekit-superforms/client'
     import { addStaffFormSchema } from '$lib/schemas/add-staff-member'
     import { goto } from '$app/navigation'
@@ -10,6 +9,7 @@
     import { onMount } from 'svelte'
 
     export let data
+    let someValue = 'default'
 
     const { form, errors, validate } = superForm(data.form, {
         validators: zod(addStaffFormSchema),
@@ -33,17 +33,23 @@
             progress.update((n) => Math.min(n + 10, 35))
         if ($form.firstname && $form.lastname && $form.email && $form.mobile)
             progress.update((n) => Math.min(n + 5, 40))
-        if ($form.firstname && $form.lastname && $form.email)
-        localStorage.setItem('progresslevel', '40')
+        
+        if (typeof window !== 'undefined' && $form.firstname && $form.lastname && $form.email) {
+            localStorage.setItem('progresslevel', '40')
+        }
     }
+
     onMount(() => {
-        localStorage.clear()
+        if (typeof window !== 'undefined') {
+            someValue = localStorage.getItem('someKey') || 'defaultValue'
+        }
     })
 
     function validateInput(field) {
         validate(field)
     }
 </script>
+
 
 <form method="POST">
     <div class="flex flex-col items-center w-full">
@@ -102,7 +108,6 @@
                 <ProgressBar />
             </div>
         </div>
-
         <div class="px-4 my-2 w-full sm:w-1/2 lg:w-2/5">
             <div class="hidden sm:block md:mt-3 xl:mt-6 py-4">
                 <ProgressBar />
@@ -121,7 +126,6 @@
                     mobile number.
                 </div>
             </div>
-
             <div class="flex flex-col md:grid md:grid-cols-2 gap-2 sm:gap-4">
                 <div class="w-full relative">
                     <label

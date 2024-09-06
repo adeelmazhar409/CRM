@@ -40,7 +40,7 @@
                     type="submit"
                     class="bg-purple-600 text-white w-16 p-2 rounded-lg mx-5 my-4"
                 >
-                    Next
+                    Save
                 </button>
             </div>
         </div>

@@ -3,16 +3,20 @@ import { supabase } from '$lib/supabaseClient'
 import { redirect } from '@sveltejs/kit'
 import { fail, superValidate, withFiles } from 'sveltekit-superforms'
 import { zod } from 'sveltekit-superforms/adapters'
-import { v4 as uuidv4 } from 'uuid' // Import UUID for unique image names
+import { v4 as uuidv4 } from 'uuid'
 
-export const load = async () => {
-    const form = await superValidate(zod(ImageUploadSchema))
+export const load = async ({ cookies }) => {
+    const step2Data = cookies.get('step2Data')
+    const form = step2Data
+        ? await superValidate(JSON.parse(step2Data), zod(ImageUploadSchema))
+        : await superValidate(zod(ImageUploadSchema))
+        
 
     return { form }
 }
 
 export const actions = {
-    default: async ({cookies, request, url }) => {
+    default: async ({ cookies, request, url }) => {
         const formData = await request.formData()
         const form = await superValidate(formData, zod(ImageUploadSchema))
 
@@ -44,7 +48,7 @@ export const actions = {
                 .from('staff-images')
                 .getPublicUrl(imageName)
 
-            const publicURL = data.publicUrl // Accessing the correct property
+            const publicURL = data.publicUrl
 
             const { data: updateData, error: updateError } = await supabase
                 .from('staff')
@@ -57,6 +61,12 @@ export const actions = {
                 })
             }
 
+            cookies.set('step2Data', JSON.stringify({ imageUrl: publicURL }), {
+                path: '/',
+                httpOnly: true,
+                sameSite: 'strict',
+                maxAge: 60 * 60 * 24,
+            })
             cookies.set(
                 'formCompletion',
                 JSON.stringify({ step1: true, step2: true, step3: false }),
@@ -64,14 +74,14 @@ export const actions = {
                     path: '/',
                     httpOnly: true,
                     sameSite: 'strict',
-                    maxAge: 60 * 60 * 24, // Set cookie expiration (1 day in this case)
+                    maxAge: 60 * 60 * 24,
                 }
             )
 
             throw redirect(303, `/staff-member/assign-role?staffId=${staffId}`)
         }
 
-        console.log('No image file provided')
-        throw redirect(303, `/staff-member/assign-role?staffId=${staffId}`)
+        // console.log('No image file provided')
+        // throw redirect(303, `/staff-member/assign-role?staffId=${staffId}`)
     },
 }

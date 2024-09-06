@@ -55,6 +55,9 @@
             console.error('Error sending email:', error)
         }
     }
+    function goToPreviousStep() {
+        goto(`/staff-member/assign-role?staffId=${data.staffId}`);
+    }
 
     $: {
         if ($form.code) progress.update((n) => Math.min(n + 20, 100))
@@ -102,6 +105,13 @@
                 </button>
             </div>
         </div>
+        <button
+            on:click={goToPreviousStep}
+            type="button"
+            class="bg-purple-600 text-white w-16 p-2 rounded-lg mx-5 my-4"
+        >
+            back
+        </button>
         <!-- top for mobile -->
         <div class="flex flex-col sm:hidden w-full py-1 border-b-2 mb-6">
             <div class="font-sans grid grid-cols-4 md:grid-cols-3 items-center">

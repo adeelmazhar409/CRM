@@ -6,13 +6,15 @@ import { fail, superValidate } from 'sveltekit-superforms'
 import { zod } from 'sveltekit-superforms/adapters'
 
 export const load = async ({ params }) => {
-let Id = params.id;
+    let Id = params.id;
+    
     const { data: staffMember, error } = await supabase
         .from('staff')
         .select()
         .eq('id', Id)
         .single()
 
+    console.log(staffMember);
     const form = await superValidate(staffMember, zod(RadioButtonSchema))
 
     return { form }

@@ -18,24 +18,25 @@ export async function DELETE({ params }) {
     }
 
     const imageUrl = staffData.image_url
-    
-    const filePath = imageUrl.split('/staff-images/')[1]
+    if (imageUrl) {
+        const filePath = imageUrl.split('/staff-images/')[1]
 
-    if (!filePath) {
-        return json(
-            { error: 'Unable to extract file path from image URL' },
-            { status: 500 }
-        )
-    }
+        if (!filePath) {
+            return json(
+                { error: 'Unable to extract file path from image URL' },
+                { status: 500 }
+            )
+        }
 
-    const { data: deleteImageData, error: deleteImageError } =
-        await supabase.storage.from('staff-images').remove([filePath])
+        const { data: deleteImageData, error: deleteImageError } =
+            await supabase.storage.from('staff-images').remove([filePath])
 
-    if (deleteImageError) {
-        return json(
-            { error: 'Failed to delete image from storage' },
-            { status: 500 }
-        )
+        if (deleteImageError) {
+            return json(
+                { error: 'Failed to delete image from storage' },
+                { status: 500 }
+            )
+        }
     }
 
     const { data: deleteStaffData, error: deleteStaffError } = await supabase

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { addStaffFormSchema } from '$lib/schemas/add-staff-member'
 import { supabase } from '$lib/supabaseClient'
 import { redirect } from '@sveltejs/kit'
@@ -16,7 +15,12 @@ export const load = async ({ cookies }) => {
             maxAge: 60 * 60 * 24, // Set cookie expiration (1 day in this case)
         }
     )
-    const form = await superValidate(zod(addStaffFormSchema))
+    
+    const step1Data = cookies.get('step1Data')
+    const form = step1Data
+        ? await superValidate(JSON.parse(step1Data), zod(addStaffFormSchema))
+        : await superValidate(zod(addStaffFormSchema))
+    // const form = await superValidate(zod(addStaffFormSchema))
 
     return { form }
 }
@@ -44,6 +48,11 @@ export const actions = {
             return fail(400, { error: error.message })
         }
         const insertedId = data[0].id
+
+        cookies.set('step1Data', JSON.stringify(form.data), {
+            path: '/',
+            httpOnly: true,
+        })
         cookies.set(
             'formCompletion',
             JSON.stringify({ step1: true, step2: false, step3: false }),

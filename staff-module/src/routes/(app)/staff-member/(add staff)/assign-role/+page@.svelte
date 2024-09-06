@@ -18,19 +18,28 @@
         },
     })
 
+    function goToPreviousStep() {
+        goto(`/staff-member/upload?staffId=${data.staffId}`);
+    }
+
     let roles = ['Kitchen Staff', 'Service Staff', 'Manager', 'Owner']
 
     $: {
         if ($form.role) progress.update((n) => Math.min(n + 20, 80))
-        if ($form.role) localStorage.setItem('progresslevel', '80')
+        if (typeof window !== 'undefined' && $form.role) {
+            localStorage.setItem('progresslevel', '80')
+        }
     }
 
     onMount(() => {
-        let value = localStorage.getItem('progresslevel')
-        console.log(value)
-        progress.set(Number(value))
+        if (typeof window !== 'undefined') {
+            let value = localStorage.getItem('progresslevel')
+            console.log(value)
+            progress.set(Number(value) || 0) 
+        }
     })
 </script>
+
 
 <form method="POST">
     <div class="flex flex-col items-center w-full">
@@ -60,7 +69,13 @@
                 </button>
             </div>
         </div>
-
+        <button
+            on:click={goToPreviousStep}
+            type="button"
+            class="bg-purple-600 text-white w-16 p-2 rounded-lg mx-5 my-4"
+        >
+            back
+        </button>
         <!-- Top for mobile -->
         <div class="flex flex-col sm:hidden w-full py-1 border-b-2">
             <div class="font-sans grid grid-cols-4 md:grid-cols-3 items-center">
