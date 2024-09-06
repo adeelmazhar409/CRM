@@ -12,7 +12,7 @@ export async function handle({ event, resolve }) {
     const { route } = event
     console.log(route)
 
-    console.log(locals.formCompletion)
+    // console.log(locals.formCompletion)
     if (
         route.id === '/(app)/staff-member/(add staff)/upload' &&
         !locals.formCompletion.step1

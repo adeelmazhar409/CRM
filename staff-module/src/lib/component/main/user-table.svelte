@@ -31,7 +31,6 @@
     })
 
     const handleRowClick = (profile) => {
-        // console.log(profile);
         selectedUser.set(profile)
         isStaffviewOpen = true
     }
@@ -43,11 +42,11 @@
     const toggle = () => (isMenuOpen = !isMenuOpen)
 </script>
 
-<div class="relative mx-6 lg:mx-8">
+<div class="relative mx-6 h-full lg:mx-8">
     <!-- Burger Button -->
     <div
         id="hamburger"
-        class=" sm:flex sm:flex-row flex-col justify-between items-center my-6 w-full"
+        class=" sm:flex sm:flex-row flex-col justify-between items-center my-6 h-fit w-full"
     >
         <div class="grid grid-cols-6 items-center my-8 sm:my-0">
             <button on:click={toggle} class="grid sm:hidden">
@@ -78,63 +77,73 @@
         <SideNav bind:isMenuOpen />
     </div>
 
-    <div class="my-6 border-2 border-border-color rounded-2xl">
-        <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-zinc-50">
-                <tr>
-                    <th
-                        scope="col"
-                        class="p-3 w-1/2 text-left text-base font-bold text-text-light tracking-wider"
-                    >
-                        Name / Nickname
-                    </th>
-                    <th
-                        scope="col"
-                        class="p-3 w-1/2 text-left text-base font-bold text-text-light tracking-wider"
-                    >
-                        Role
-                    </th>
-                </tr>
-            </thead>
-            <tbody class="bg-white divide-y overflow-scroll divide-gray-200">
-                {#each staffMemberInTable as person}
-                    <tr
-                        class="hover:bg-zinc-50 cursor-pointer"
-                        on:click={() => handleRowClick(person)}
-                    >
-                        <td
-                            class="p-3 w-1/2 whitespace-nowrap text-sm font-medium text-gray-900"
+    <!-- Staff table with fixed header and scrollable body -->
+    <div class="flex flex-col h-[calc(100vh-150px)] my-6 border-2 border-border-color rounded-2xl">
+        <div class="overflow-visible border-b-2">
+            <!-- Fixed header -->
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-zinc-50">
+                    <tr>
+                        <th
+                            scope="col"
+                            class="p-3 w-1/2 text-left text-base font-bold text-text-light tracking-wider"
                         >
-                            <div class="flex flex-row gap-3">
-                                <div
-                                    class="rounded-full w-12 h-12 grid place-content-center bg-slate-50"
-                                >
-                                    <p
-                                        class="font-medium text-text-light text-base sm:text-lg leading-28"
-                                    >
-                                        {person.tagName}
-                                    </p>
-                                </div>
-                                <div>
-                                    <p
-                                        class="font-semibold text-base sm:text-lg leading-28"
-                                    >
-                                        {person.Name}
-                                    </p>
-                                    <p class="text-base font-normal leading-24">
-                                        {person.tag}
-                                    </p>
-                                </div>
-                            </div>
-                        </td>
-                        <td
-                            class="p-3 w-1/2 whitespace-nowrap font-normal text-base sm:text-lg leading-28 text-purple-hover"
+                            Name / Nickname
+                        </th>
+                        <th
+                            scope="col"
+                            class="p-3 w-1/2 text-left text-base font-bold text-text-light tracking-wider"
                         >
-                            {person.role}
-                        </td>
+                            Role
+                        </th>
                     </tr>
-                {/each}
-            </tbody>
-        </table>
+                </thead>
+            </table>
+        </div>
+
+        <!-- Scrollable body -->
+        <div class="flex-grow overflow-y-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+                <tbody class="bg-white h-full divide-y divide-gray-200">
+                    {#each staffMemberInTable as person}
+                        <tr
+                            class="hover:bg-zinc-50 cursor-pointer"
+                            on:click={() => handleRowClick(person)}
+                        >
+                            <td
+                                class="p-3 w-1/2 whitespace-nowrap text-sm font-medium text-gray-900"
+                            >
+                                <div class="flex flex-row gap-3">
+                                    <div
+                                        class="rounded-full w-12 h-12 grid place-content-center bg-slate-50"
+                                    >
+                                        <p
+                                            class="font-medium text-text-light text-base sm:text-lg leading-28"
+                                        >
+                                            {person.tagName}
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <p
+                                            class="font-semibold text-base sm:text-lg leading-28"
+                                        >
+                                            {person.Name}
+                                        </p>
+                                        <p class="text-base font-normal leading-24">
+                                            {person.tag}
+                                        </p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td
+                                class="p-3 w-1/2 whitespace-nowrap font-normal text-base sm:text-lg leading-28 text-purple-hover"
+                            >
+                                {person.role}
+                            </td>
+                        </tr>
+                    {/each}
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

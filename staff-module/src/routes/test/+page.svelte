@@ -156,7 +156,7 @@
         </div>
     </div>
 </form> -->
-<script>
+<!-- <script>
     
     import PuprleButton from '$lib/UI/puprle-button.svelte'
    let name ='save'
@@ -166,4 +166,4 @@
 </script>
 
 
-<PuprleButton bind:name />
+<PuprleButton bind:name /> -->
