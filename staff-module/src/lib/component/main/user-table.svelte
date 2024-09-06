@@ -78,7 +78,7 @@
             </thead>
         </table>
         <!-- Add the scroll container here -->
-        <div class="sm:h-[580px] h-[500px] overflow-y-auto">
+        <div class=" h-[600px] overflow-y-auto">
             <table class="min-w-full divide-y divide-gray-200">
                 <tbody class="bg-white divide-y divide-gray-200">
                     {#each staffMemberInTable as person}
