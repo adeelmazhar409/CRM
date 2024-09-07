@@ -10,9 +10,7 @@
     export let isStaffviewOpen = false
     let isMenuOpen = false
 
-    $: staffMemberInTable = [
-        ...staffMember,
-    ].map((v, i) => {
+    $: staffMemberInTable = [...staffMember].map((v, i) => {
         return {
             tagName:
                 v.firstname.charAt(0).toUpperCase() +
@@ -40,6 +38,16 @@
     }
 
     const toggle = () => (isMenuOpen = !isMenuOpen)
+
+    import { onMount } from 'svelte'
+    let isLoading = true
+
+    // Simulating a loading delay
+    onMount(() => {
+        setTimeout(() => {
+            isLoading = false
+        }, 1500) // Simulate loading time
+    })
 </script>
 
 <div class="relative mx-6 h-full lg:mx-8">
@@ -78,7 +86,9 @@
     </div>
 
     <!-- Staff table with fixed header and scrollable body -->
-    <div class="flex flex-col h-[calc(100vh-150px)] my-6 border-2 border-border-color rounded-2xl">
+    <div
+        class="flex flex-col h-[calc(100vh-150px)] my-6 border-2 border-border-color rounded-2xl"
+    >
         <div class="overflow-visible border-b-2">
             <!-- Fixed header -->
             <table class="min-w-full divide-y divide-gray-200">
@@ -105,43 +115,73 @@
         <div class="flex-grow overflow-y-auto">
             <table class="min-w-full divide-y divide-gray-200">
                 <tbody class="bg-white h-full divide-y divide-gray-200">
-                    {#each staffMemberInTable as person}
-                        <tr
-                            class="hover:bg-zinc-50 cursor-pointer"
-                            on:click={() => handleRowClick(person)}
-                        >
-                            <td
-                                class="p-3 w-1/2 whitespace-nowrap text-sm font-medium text-gray-900"
-                            >
-                                <div class="flex flex-row gap-3">
+                    {#if isLoading}
+                        {#each Array(5) as _, i}
+                            <!-- Skeleton rows -->
+                            <tr>
+                                <td class="p-3 w-1/2 whitespace-nowrap">
+                                    <div class="flex flex-row gap-3">
+                                        <div
+                                            class="rounded-full w-12 h-12 bg-gray-200 animate-pulse"
+                                        ></div>
+                                        <div class="flex flex-col gap-2">
+                                            <div
+                                                class="w-32 h-6 bg-gray-200 animate-pulse"
+                                            ></div>
+                                            <div
+                                                class="w-24 h-5 bg-gray-200 animate-pulse"
+                                            ></div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="p-3 w-1/2 whitespace-nowrap">
                                     <div
-                                        class="rounded-full w-12 h-12 grid place-content-center bg-slate-50"
-                                    >
-                                        <p
-                                            class="font-medium text-text-light text-base sm:text-lg leading-28"
-                                        >
-                                            {person.tagName}
-                                        </p>
-                                    </div>
-                                    <div>
-                                        <p
-                                            class="font-semibold text-base sm:text-lg leading-28"
-                                        >
-                                            {person.Name}
-                                        </p>
-                                        <p class="text-base font-normal leading-24">
-                                            {person.tag}
-                                        </p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td
-                                class="p-3 w-1/2 whitespace-nowrap font-normal text-base sm:text-lg leading-28 text-purple-hover"
+                                        class="w-20 h-6 bg-gray-200 animate-pulse"
+                                    ></div>
+                                </td>
+                            </tr>
+                        {/each}
+                    {:else}
+                        {#each staffMemberInTable as person}
+                            <tr
+                                class="hover:bg-zinc-50 cursor-pointer"
+                                on:click={() => handleRowClick(person)}
                             >
-                                {person.role}
-                            </td>
-                        </tr>
-                    {/each}
+                                <td
+                                    class="p-3 w-1/2 whitespace-nowrap text-sm font-medium text-gray-900"
+                                >
+                                    <div class="flex flex-row gap-3">
+                                        <div
+                                            class="rounded-full w-12 h-12 grid place-content-center bg-slate-50"
+                                        >
+                                            <p
+                                                class="font-medium text-text-light text-base sm:text-lg leading-28"
+                                            >
+                                                {person.tagName}
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p
+                                                class="font-semibold text-base sm:text-lg leading-28"
+                                            >
+                                                {person.Name}
+                                            </p>
+                                            <p
+                                                class="text-base font-normal leading-24"
+                                            >
+                                                {person.tag}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td
+                                    class="p-3 w-1/2 whitespace-nowrap font-normal text-base sm:text-lg leading-28 text-purple-hover"
+                                >
+                                    {person.role}
+                                </td>
+                            </tr>
+                        {/each}
+                    {/if}
                 </tbody>
             </table>
         </div>
