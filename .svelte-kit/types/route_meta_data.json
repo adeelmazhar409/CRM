@@ -1,0 +1,37 @@
+{
+	"/(app)": [],
+	"/": [],
+	"/api/send-code-email": [
+		"src/routes/api/send-code-email/+server.js"
+	],
+	"/api/staff/[id]": [
+		"src/routes/api/staff/[id]/+server.js"
+	],
+	"/(app)/staff-member": [
+		"src/routes/(app)/staff-member/+layout.server.js",
+		"src/routes/(app)/staff-member/+layout.server.js"
+	],
+	"/(app)/staff-member/(add staff)/assign-role": [
+		"src/routes/(app)/staff-member/(add staff)/assign-role/+page.server.js"
+	],
+	"/(app)/staff-member/(add staff)/code": [
+		"src/routes/(app)/staff-member/(add staff)/code/+page.server.js"
+	],
+	"/(app)/staff-member/(add staff)/create": [
+		"src/routes/(app)/staff-member/(add staff)/create/+page.server.js"
+	],
+	"/(app)/staff-member/delete": [],
+	"/(app)/staff-member/update/code/[id]": [
+		"src/routes/(app)/staff-member/update/code/[id]/+page.server.js"
+	],
+	"/(app)/staff-member/update/details/[id]": [
+		"src/routes/(app)/staff-member/update/details/[id]/+page.server.js"
+	],
+	"/(app)/staff-member/update/role/[id]": [
+		"src/routes/(app)/staff-member/update/role/[id]/+page.server.js"
+	],
+	"/(app)/staff-member/(add staff)/upload": [
+		"src/routes/(app)/staff-member/(add staff)/upload/+page.server.js"
+	],
+	"/test": []
+}
